@@ -55,7 +55,7 @@ dependencies:
   l10n_esperanto: ^2.0.14
   linkify: ^5.0.0
   logging: ^1.1.0
-  material_color_utilities: ^0.11.1
+  material_color_utilities: ^0.13.0
   material_symbols_icons: ^4.2811.0
   meta: ^1.8.0
   # multistockfish: ^0.3.0
@@ -96,6 +96,7 @@ dev_dependencies:
   wakelock_plus_platform_interface: ^1.3.0
 
 dependency_overrides:
+  material_color_utilities: 0.13.0
   flutter_secure_storage_linux:
     git:
       url: https://github.com/christianfl/flutter_secure_storage.git
