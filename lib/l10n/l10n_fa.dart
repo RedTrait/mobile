@@ -67,6 +67,9 @@ class AppLocalizationsFa extends AppLocalizations {
   String get mobileMustBeLoggedIn => 'برای دیدن این برگه باید وارد شده باشید.';
 
   @override
+  String get mobileNewGame => 'بازی جدید';
+
+  @override
   String get mobileNoSearchResults => 'بدون نتیجه';
 
   @override
@@ -242,40 +245,73 @@ class AppLocalizationsFa extends AppLocalizations {
   String get mobileWelcomeToLichessApp => 'به نرم‌افزار lichess خوش آمدید';
 
   @override
-  String get mobileViewGame => 'View Game';
+  String get mobileViewGame => 'مشاهده بازی';
 
   @override
-  String get mobileCustomizeHomeTip => 'Tip: You can add more widgets to the Home Screen or remove those you don\'t need!';
+  String get mobileCustomizeHomeTip => 'نکته: می‌توانید ویجت های بیشتری را به صفحه‌ی اصلی اضافه کرده و یا آنهایی را که نیاز ندارید حذف کنید!';
 
   @override
-  String get mobileCustomizeHomeTipDismiss => 'Dismiss';
+  String get mobileCustomizeHomeTipDismiss => 'رد کردن';
 
   @override
-  String get mobileCustomizeButton => 'Customize';
+  String get mobileCustomizeButton => 'شخصی سازی';
 
   @override
-  String get mobileStopShowingThreat => 'Stop showing threat';
+  String get mobileStopShowingThreat => 'تهدید رو نشان نده';
 
   @override
-  String get mobileTournamentCompleted => 'Completed';
+  String get mobileTournamentCompleted => 'کامل شده';
 
   @override
-  String get mobileTournamentJumpToMyPage => 'Jump to my page';
+  String get mobileTournamentJumpToMyPage => 'به صفحه‌ی من برو';
 
   @override
-  String get mobileDisplayModeCompact => 'Compact';
+  String get mobileDisplayModeCompact => 'فشرده';
 
   @override
-  String get mobileDisplayModeDetailed => 'Detailed';
+  String get mobileDisplayModeDetailed => 'با جزئیات';
 
   @override
-  String get mobileOpeningExplorerNotAvailableOffline => 'Opening Explorer is not available offline.';
+  String get mobileOpeningExplorerNotAvailableOffline => 'پویشگرِ گشایش، برون‌خط امکان‌پذیر نیست.';
 
   @override
-  String get mobileChallengeCreated => 'Challenge created: You will be notified when the game starts.\\nYou can access it from the home tab.';
+  String get mobileChallengeCreated => 'چالش ایجاد شد: وقتی بازی شروع شود شما آگاهنده می‌شوید.\\nمی‌توانید از زبانهٔ خانه به آن دسترسی داشته باشید.';
 
   @override
-  String get mobilePreviousPage => 'Previous';
+  String get mobilePreviousPage => 'پیشین';
+
+  @override
+  String get mobileOrImportPgnFile => 'یا یک فایل PGN را بارگذاری کنید';
+
+  @override
+  String get variantStandardTitle => 'قانون‌های اِستاندهٔ شطرنج (فیده)';
+
+  @override
+  String get variantChess960Title => 'وضعیتِ آغازشِ مُهره‌های عرضِ سواران تصادفی است.';
+
+  @override
+  String get variantKingOfTheHillTitle => 'برای پیروزی در بازی، شاه‌تان را به تپه بَرید.';
+
+  @override
+  String get variantThreeCheckTitle => 'برای پیروزی در بازی، ۳ بار به حریف‌تان کیش دهید.';
+
+  @override
+  String get variantAntichessTitle => 'برای پیروزی در بازی، همهٔ مُهره‌های‌تان را ببازید (یا پات شوید).';
+
+  @override
+  String get variantAtomicTitle => 'برای پیروزی، شاهِ حریف را بِپُکانید.';
+
+  @override
+  String get variantHordeTitle => 'یک طرف پیاده‌های زیادی دارد و دیگری یک ارتشِ عادی دارد.';
+
+  @override
+  String get variantRacingKingsTitle => 'برای پیروزی، شاه‌تان را به طرفِ دیگر بَرید.';
+
+  @override
+  String get variantCrazyhouseTitle => 'می‌توان جای حرکتِ یک مهره، مهره‌های گرفته را روی تخته گذاشت.';
+
+  @override
+  String get variantFromPositionTitle => 'شطرنج اِستانده از وضعیتِ دلخواه';
 
   @override
   String get activityActivity => 'فعالیت';
@@ -897,6 +933,9 @@ class AppLocalizationsFa extends AppLocalizations {
   String get broadcastScore => 'امتیاز';
 
   @override
+  String get broadcastStandingsDisclaimer => 'Persian';
+
+  @override
   String get broadcastAllTeams => 'همهٔ یَران‌ها';
 
   @override
@@ -941,12 +980,82 @@ class AppLocalizationsFa extends AppLocalizations {
   }
 
   @override
+  String get broadcastMatchPoints => 'امتیاز نهایی';
+
+  @override
+  String get broadcastGamePoints => 'Persian';
+
+  @override
+  String get broadcastMatches => 'Persian';
+
+  @override
+  String get broadcastMatchHistory => 'تاریخچه بازی';
+
+  @override
+  String get broadcastTeamResults => 'نتایج تیمی';
+
+  @override
+  String broadcastTermsAutomaticallyTranslated(String param) {
+    return 'عباراتی که در ادامه آمده‌اند به طور خودکار ترجمه خواهند شد:\n$param.';
+  }
+
+  @override
   String broadcastRoundX(String param) {
     return 'دورِ $param';
   }
 
   @override
   String get broadcastDefaultRoundNameHelp => 'حفظِ نامِ پیش‌فرض، خودکار آن را به همهٔ زبان‌های دیگر می‌تَرجُمد.';
+
+  @override
+  String get broadcastOpenTournament => 'آزاد';
+
+  @override
+  String get broadcastWomenTournament => 'زنان';
+
+  @override
+  String get broadcastMenTournament => 'مردان';
+
+  @override
+  String get broadcastGirlsTournament => 'دختران';
+
+  @override
+  String get broadcastBoysTournament => 'پسران';
+
+  @override
+  String broadcastOpenUnderXAgeTournament(String param) {
+    return 'آزاد زیر $param سال';
+  }
+
+  @override
+  String broadcastGirlsUnderXAgeTournament(String param) {
+    return 'آزاد دختران زیر $param سال';
+  }
+
+  @override
+  String broadcastBoysUnderXAgeTournament(String param) {
+    return 'آزاد پسران زیر $param سال';
+  }
+
+  @override
+  String get broadcastQuarterfinals => 'یک چهارم نهایی';
+
+  @override
+  String get broadcastSemifinals => 'نیمه نهایی';
+
+  @override
+  String get broadcastFinals => 'نهایی';
+
+  @override
+  String get broadcastTiebreaks => 'پوئن شکنی‌ها';
+
+  @override
+  String broadcastGameX(String param) {
+    return 'بازی $param';
+  }
+
+  @override
+  String get broadcastKnockouts => 'ناک اوت';
 
   @override
   String broadcastNbBroadcasts(int count) {
@@ -1810,6 +1919,12 @@ class AppLocalizationsFa extends AppLocalizations {
   String get puzzleThemeCapturingDefenderDescription => 'گرفتن یک مهره که برای دفاع از یک مهره دیگر حیاتی است، اجازه می دهد مهره ای که اکنون بدون دفاع است در حرکت بعدی گرفته شود.';
 
   @override
+  String get puzzleThemeCollinearMove => 'Collinear move';
+
+  @override
+  String get puzzleThemeCollinearMoveDescription => 'Two opposing pieces face each other, and one slides along the line of attack without capturing the enemy piece.';
+
+  @override
   String get puzzleThemeCornerMate => 'ماتِ کُنج';
 
   @override
@@ -1891,6 +2006,12 @@ class AppLocalizationsFa extends AppLocalizations {
   String get puzzleThemeEnPassantDescription => 'گرفتن پیاده در حال عبور با پیاده دیگر.';
 
   @override
+  String get puzzleThemeEpauletteMate => 'Epaulette mate';
+
+  @override
+  String get puzzleThemeEpauletteMateDescription => 'Two adjacent escape squares for a checked king are occupied by other pieces.';
+
+  @override
   String get puzzleThemeExposedKing => 'شاه در معرض خطر';
 
   @override
@@ -1943,6 +2064,12 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get puzzleThemeMorphysMateDescription => 'رُخ به محدود کردنِ شاه کمک می‌کند، فیل مات می‌کند.';
+
+  @override
+  String get puzzleThemeSwallowstailMate => 'Swallow\'s tail mate';
+
+  @override
+  String get puzzleThemeSwallowstailMateDescription => 'A checkmate pattern that visually resembles the appearance of a swallow’s tail, similar to a V shape.';
 
   @override
   String get puzzleThemeTriangleMate => 'ماتِ مثلث';
@@ -2190,7 +2317,7 @@ class AppLocalizationsFa extends AppLocalizations {
   String get settingsThisAccountIsClosed => 'این حساب بسته شده است';
 
   @override
-  String get gameSetup => 'بَرپایشِ بازی';
+  String get gameSetup => 'ایجاد بازی';
 
   @override
   String get challengeAFriend => 'دعوت به بازی';
@@ -2202,7 +2329,7 @@ class AppLocalizationsFa extends AppLocalizations {
   String get gameMode => 'حالتِ بازی';
 
   @override
-  String get createLobbyGame => 'ایجاد بازی در سَرسَرا';
+  String get createLobbyGame => 'ایجاد بازی در لابی';
 
   @override
   String get toInviteSomeoneToPlayGiveThisUrl => 'برای دعوت کسی به بازی، این وب‌نشانی را دهید';
@@ -2215,6 +2342,12 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get orLetYourOpponentScanQrCode => 'یا از حریف‌تان بخواهید این کدِ QR را بِپویَد';
+
+  @override
+  String get reusableChallengeUrl => 'پیوند بازی قابل استفاده مجدد';
+
+  @override
+  String get permanentLinkForAnyoneToChallengeYou => 'پیوندِ دائمی برای اینکه هر کسی با همین تنظیمات، به شما پیشنهاد بازی دهد.';
 
   @override
   String get waiting => 'در حال انتظار';
@@ -2551,25 +2684,46 @@ class AppLocalizationsFa extends AppLocalizations {
   String get evaluationGauge => 'میله ارزیابی';
 
   @override
-  String get visualMotifs => 'Visual motifs';
+  String get visualMotifs => 'بُن‌مایه‌های بصری';
 
   @override
-  String get undefendedPieces => 'Undefended pieces';
+  String get undefendedPieces => 'مُهره‌های بی‌دفاع';
 
   @override
-  String get pinnedPieces => 'Pinned pieces';
+  String get pinnedPieces => 'مهره‌های آچمز';
 
   @override
-  String get checkableKing => 'Checkable king';
+  String get checkableKing => 'شاهِ کیش‌پذیر';
 
   @override
   String get multipleLines => 'شاخه های متعدد';
+
+  @override
+  String get multipleLinesDescription => 'Set number of evaluation lines and move arrows on the board';
+
+  @override
+  String get searchTime => 'Search time';
+
+  @override
+  String get searchTimeDescription => 'Set time to evaluate fresh positions';
+
+  @override
+  String get threads => 'Threads';
+
+  @override
+  String get threadsDescription => 'Set this below your CPU\'s thread count, the ticks mark a good safe choice';
+
+  @override
+  String get threadsDescriptionMobile => 'More threads will use more battery for better analysis';
 
   @override
   String get cpus => 'پردازنده(ها)';
 
   @override
   String get memory => 'حافظه';
+
+  @override
+  String get memoryDescription => 'Higher values may improve performance';
 
   @override
   String get infiniteAnalysis => 'تحلیل بی‌کران';
@@ -2684,7 +2838,7 @@ class AppLocalizationsFa extends AppLocalizations {
   String get variants => 'وَرتا';
 
   @override
-  String get variantsDescription => 'More ways to play';
+  String get variantsDescription => 'شیوه‌های بیشتر برای بازی';
 
   @override
   String get timeControl => 'زمان';
@@ -2729,7 +2883,7 @@ class AppLocalizationsFa extends AppLocalizations {
   String get signupUsernameHint => 'مطمئن شوید که یک نام کاربری مناسب انتخاب میکنید. بعداً نمی توانید آن را تغییر دهید و هر حسابی با نام کاربری نامناسب بسته می شود!';
 
   @override
-  String get signupEmailHint => 'ما فقط برای بازنشاندن گذرواژه، از آن استفاده خواهیم کرد.';
+  String get signupEmailPromise => 'ما فقط رایانامه‌هایی دربارهٔ حساب کاربری‌تان را برای‌تان خواهیم فرستاد و هرگز رایانامه‌تان را نمی‌همرسانیم.';
 
   @override
   String get password => 'گذرواژه';
@@ -2915,7 +3069,7 @@ class AppLocalizationsFa extends AppLocalizations {
   String get unlimited => 'نامحدود';
 
   @override
-  String get unlimitedDescription => 'Take all the time you need';
+  String get unlimitedDescription => 'کل زمان برای شماست';
 
   @override
   String get mode => 'حالت';
@@ -3157,6 +3311,12 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get gameAsGIF => 'بارگیری GIF بازی';
+
+  @override
+  String get playerNames => 'نام‌های بازیکن';
+
+  @override
+  String get moveAnnotations => 'حرکت‌نویسی';
 
   @override
   String get pasteTheFenStringHere => 'رشته FEN را در این قسمت قرار دهید';
@@ -3607,6 +3767,15 @@ class AppLocalizationsFa extends AppLocalizations {
   String get invalidAuthenticationCode => 'کد راستین‌آزمایی نامعتبر';
 
   @override
+  String get clearField => 'Clear field';
+
+  @override
+  String get orSeparator => 'Or';
+
+  @override
+  String get logInByEmail => 'Log in by email';
+
+  @override
   String get emailMeALink => 'پیوندی به رایانامه‌ام بفرست';
 
   @override
@@ -3977,21 +4146,6 @@ class AppLocalizationsFa extends AppLocalizations {
   String get keyEnterOrExitVariation => 'ورود/خروج به وَرتِش';
 
   @override
-  String get keyRequestComputerAnalysis => 'درخواست تحلیل رایانه‌ای، از اشتباه‌های‌تان بیاموزید';
-
-  @override
-  String get keyNextLearnFromYourMistakes => 'بعدی (از اشتباه‌های‌تان بیاموزید)';
-
-  @override
-  String get keyNextBlunder => 'اشتباه فاحش بعدی';
-
-  @override
-  String get keyNextMistake => 'اشتباه بعدی';
-
-  @override
-  String get keyNextInaccuracy => 'بی‌دقتی بعدی';
-
-  @override
   String get keyPreviousBranch => 'شاخه پیشین';
 
   @override
@@ -4272,6 +4426,9 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get brightness => 'درخشندگی';
+
+  @override
+  String get contrast => 'تَبایُن';
 
   @override
   String get hue => 'فام';
@@ -4903,10 +5060,15 @@ class AppLocalizationsFa extends AppLocalizations {
   String get clearSearch => 'پاکیدنِ جستجو';
 
   @override
+  String thereAreNoResultsForX(String param) {
+    return 'No results for \"$param\"';
+  }
+
+  @override
   String get tags => 'برچسب‌ها';
 
   @override
-  String get enPassant => 'En passant';
+  String get enPassant => 'اجازهٔ آن‌پاسان';
 
   @override
   String opponentLeftCounter(int count) {

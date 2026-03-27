@@ -67,6 +67,9 @@ class AppLocalizationsRo extends AppLocalizations {
   String get mobileMustBeLoggedIn => 'Trebuie să te autentifici pentru a accesa această pagină.';
 
   @override
+  String get mobileNewGame => 'Joc nou';
+
+  @override
   String get mobileNoSearchResults => 'Niciun rezultat';
 
   @override
@@ -242,40 +245,73 @@ class AppLocalizationsRo extends AppLocalizations {
   String get mobileWelcomeToLichessApp => 'Bine ai venit în aplicația Lichess!';
 
   @override
-  String get mobileViewGame => 'View Game';
+  String get mobileViewGame => 'Vezi joc';
 
   @override
-  String get mobileCustomizeHomeTip => 'Tip: You can add more widgets to the Home Screen or remove those you don\'t need!';
+  String get mobileCustomizeHomeTip => 'Sfat: Puteți adăuga mai multe widget-uri în ecranul principal sau să le eliminați pe cele de care nu aveți nevoie!';
 
   @override
-  String get mobileCustomizeHomeTipDismiss => 'Dismiss';
+  String get mobileCustomizeHomeTipDismiss => 'Renunță';
 
   @override
-  String get mobileCustomizeButton => 'Customize';
+  String get mobileCustomizeButton => 'Personalizează';
 
   @override
-  String get mobileStopShowingThreat => 'Stop showing threat';
+  String get mobileStopShowingThreat => 'Nu mai arăta amenințarea';
 
   @override
-  String get mobileTournamentCompleted => 'Completed';
+  String get mobileTournamentCompleted => 'Terminate';
 
   @override
-  String get mobileTournamentJumpToMyPage => 'Jump to my page';
+  String get mobileTournamentJumpToMyPage => 'Sari la pagina mea';
 
   @override
   String get mobileDisplayModeCompact => 'Compact';
 
   @override
-  String get mobileDisplayModeDetailed => 'Detailed';
+  String get mobileDisplayModeDetailed => 'Detaliat';
 
   @override
-  String get mobileOpeningExplorerNotAvailableOffline => 'Opening Explorer is not available offline.';
+  String get mobileOpeningExplorerNotAvailableOffline => 'Exploratorul nu se poate deschide deconectat.';
 
   @override
-  String get mobileChallengeCreated => 'Challenge created: You will be notified when the game starts.\\nYou can access it from the home tab.';
+  String get mobileChallengeCreated => 'Provocare creată: Vei fi notificat când începe jocul.\\nO poți accesa din pagina principală.';
 
   @override
-  String get mobilePreviousPage => 'Previous';
+  String get mobilePreviousPage => 'Înapoi';
+
+  @override
+  String get mobileOrImportPgnFile => 'Sau încarcă un fișier PGN';
+
+  @override
+  String get variantStandardTitle => 'Reguli de șah standard (FIDE)';
+
+  @override
+  String get variantChess960Title => 'Poziţia de început a pieselor din prima linie este randomizată.';
+
+  @override
+  String get variantKingOfTheHillTitle => 'Adu-ți regele în centru pentru a câștiga jocul.';
+
+  @override
+  String get variantThreeCheckTitle => 'Dă-i șah de 3 ori adversarului pentru a câștiga jocul.';
+
+  @override
+  String get variantAntichessTitle => 'Pierde-ți toate piesele (sau intră în pat) pentru a câștiga jocul.';
+
+  @override
+  String get variantAtomicTitle => 'Spulberă regele adversarului pentru a câștiga.';
+
+  @override
+  String get variantHordeTitle => 'O parte are un număr mare de pioni, cealaltă parte are o armată normală.';
+
+  @override
+  String get variantRacingKingsTitle => 'Adu-ți regele în cealaltă parte a tablei pentru a câștiga.';
+
+  @override
+  String get variantCrazyhouseTitle => 'Piesele capturate pot fi așezate înapoi pe tablă în loc de a mișca o piesă.';
+
+  @override
+  String get variantFromPositionTitle => 'Șah standard dintr-o poziție personalizată';
 
   @override
   String get activityActivity => 'Activitate';
@@ -917,6 +953,9 @@ class AppLocalizationsRo extends AppLocalizations {
   String get broadcastScore => 'Scor';
 
   @override
+  String get broadcastStandingsDisclaimer => 'Clasamentele sunt calculate folosind jocuri difuzate şi pot fi diferite de rezultatele oficiale.';
+
+  @override
   String get broadcastAllTeams => 'Toate echipele';
 
   @override
@@ -961,12 +1000,82 @@ class AppLocalizationsRo extends AppLocalizations {
   }
 
   @override
+  String get broadcastMatchPoints => 'Puncte de meci';
+
+  @override
+  String get broadcastGamePoints => 'Puncte de joc';
+
+  @override
+  String get broadcastMatches => 'Meciuri';
+
+  @override
+  String get broadcastMatchHistory => 'Istoric meciuri';
+
+  @override
+  String get broadcastTeamResults => 'Rezultate echipă';
+
+  @override
+  String broadcastTermsAutomaticallyTranslated(String param) {
+    return 'Următorii termeni vor fi traduși automat: $param.';
+  }
+
+  @override
   String broadcastRoundX(String param) {
     return 'Runda $param';
   }
 
   @override
   String get broadcastDefaultRoundNameHelp => 'Păstrarea numelui implicit îl va traduce automat în toate celelalte limbi.';
+
+  @override
+  String get broadcastOpenTournament => 'Open';
+
+  @override
+  String get broadcastWomenTournament => 'Femei';
+
+  @override
+  String get broadcastMenTournament => 'Bărbaţi';
+
+  @override
+  String get broadcastGirlsTournament => 'Fete';
+
+  @override
+  String get broadcastBoysTournament => 'Băieți';
+
+  @override
+  String broadcastOpenUnderXAgeTournament(String param) {
+    return 'Open U$param';
+  }
+
+  @override
+  String broadcastGirlsUnderXAgeTournament(String param) {
+    return 'Fete U$param';
+  }
+
+  @override
+  String broadcastBoysUnderXAgeTournament(String param) {
+    return 'Băieți U$param';
+  }
+
+  @override
+  String get broadcastQuarterfinals => 'Sferturi de finală';
+
+  @override
+  String get broadcastSemifinals => 'Semifinale';
+
+  @override
+  String get broadcastFinals => 'Finale';
+
+  @override
+  String get broadcastTiebreaks => 'Departajări';
+
+  @override
+  String broadcastGameX(String param) {
+    return 'Joc $param';
+  }
+
+  @override
+  String get broadcastKnockouts => 'Eliminatorii';
 
   @override
   String broadcastNbBroadcasts(int count) {
@@ -1838,6 +1947,12 @@ class AppLocalizationsRo extends AppLocalizations {
   String get puzzleThemeCapturingDefenderDescription => 'Capturarea unei piese esențiale apărării alteia, permițând captura piesei acum neapărată la o mutare ulterioară.';
 
   @override
+  String get puzzleThemeCollinearMove => 'Mutare coliniară';
+
+  @override
+  String get puzzleThemeCollinearMoveDescription => 'Două piese opuse se înfruntă una pe cealaltă, iar una mută de-a lungul liniei de atac fără a captura piesa inamică.';
+
+  @override
   String get puzzleThemeCornerMate => 'Mat în colț';
 
   @override
@@ -1919,6 +2034,12 @@ class AppLocalizationsRo extends AppLocalizations {
   String get puzzleThemeEnPassantDescription => 'O tactică cu regula en passant, unde un pion poate captura un pion adversar care l-a întrecut folosind mutarea sa inițială de două pătrate.';
 
   @override
+  String get puzzleThemeEpauletteMate => 'Mat cu epoleți';
+
+  @override
+  String get puzzleThemeEpauletteMateDescription => 'Două pătrate de evacuare adiacente pentru un rege în șah sunt ocupate de alte piese.';
+
+  @override
   String get puzzleThemeExposedKing => 'Rege expus';
 
   @override
@@ -1961,16 +2082,22 @@ class AppLocalizationsRo extends AppLocalizations {
   String get puzzleThemeKillBoxMateDescription => 'O tură este lingă regele inamic și susținută de o regină care de asemenea blochează pătratele pe unde ar putea evada regele. Tura și regina îl prind pe rege într-o \"casetă mortală\" de 3x3.';
 
   @override
-  String get puzzleThemePillsburysMate => 'Pillsbury\'s mate';
+  String get puzzleThemePillsburysMate => 'Mat Pillsbury';
 
   @override
-  String get puzzleThemePillsburysMateDescription => 'The rook delivers checkmate, while the bishop helps to confine it.';
+  String get puzzleThemePillsburysMateDescription => 'Tura dă mat, iar nebunul ajută la constrângerea regelui.';
 
   @override
-  String get puzzleThemeMorphysMate => 'Morphy\'s mate';
+  String get puzzleThemeMorphysMate => 'Mat Morphy';
 
   @override
-  String get puzzleThemeMorphysMateDescription => 'Use the bishop to check the king, while your rook helps to confine it.';
+  String get puzzleThemeMorphysMateDescription => 'Folosește nebunul ca să dai șah regelui, în timp ce tura îl constrânge.';
+
+  @override
+  String get puzzleThemeSwallowstailMate => 'Mat coadă de rândunică';
+
+  @override
+  String get puzzleThemeSwallowstailMateDescription => 'Un fel de mat care se aseamănă vizual cu o coadă de rândunică, similar cu o formă de V.';
 
   @override
   String get puzzleThemeTriangleMate => 'Mat în triunghi';
@@ -2063,10 +2190,10 @@ class AppLocalizationsRo extends AppLocalizations {
   String get puzzleThemeOpeningDescription => 'O tactică în prima etapă a jocului.';
 
   @override
-  String get puzzleThemeOperaMate => 'Opera mate';
+  String get puzzleThemeOperaMate => 'Mat Opera';
 
   @override
-  String get puzzleThemeOperaMateDescription => 'Check the king with a rook and use a bishop to defend the rook.';
+  String get puzzleThemeOperaMateDescription => 'Dă șah la rege cu o tură si folosește un nebun ca sa aperi tura.';
 
   @override
   String get puzzleThemePawnEndgame => 'Final cu pioni';
@@ -2243,6 +2370,12 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get orLetYourOpponentScanQrCode => 'Sau lăsați adversarul să scaneze acest cod QR';
+
+  @override
+  String get reusableChallengeUrl => 'URL provocare reutilizabil';
+
+  @override
+  String get permanentLinkForAnyoneToChallengeYou => 'Un link permanent pentru oricine să vă provoace cu aceste setări exacte.';
 
   @override
   String get waiting => 'Se așteaptă';
@@ -2585,19 +2718,40 @@ class AppLocalizationsRo extends AppLocalizations {
   String get undefendedPieces => 'Piese neapărate';
 
   @override
-  String get pinnedPieces => 'Pinned pieces';
+  String get pinnedPieces => 'Piese țintuite';
 
   @override
-  String get checkableKing => 'Checkable king';
+  String get checkableKing => 'Rege expus la șah';
 
   @override
   String get multipleLines => 'Mutări multiple';
+
+  @override
+  String get multipleLinesDescription => 'Setaţi numărul de linii de evaluare şi de săgeţi pe tablă';
+
+  @override
+  String get searchTime => 'Timp de căutare';
+
+  @override
+  String get searchTimeDescription => 'Setează timpul pentru evaluarea pozițiilor noi';
+
+  @override
+  String get threads => 'Fire de execuție';
+
+  @override
+  String get threadsDescription => 'Setați această valoare sub numărul maxim de fire de execuție al procesorului, bifele marchează o alegere sigură';
+
+  @override
+  String get threadsDescriptionMobile => 'Mai multe fire de execuţie vor folosi mai multă baterie pentru o analiză mai bună';
 
   @override
   String get cpus => 'Procesoare';
 
   @override
   String get memory => 'Memorie';
+
+  @override
+  String get memoryDescription => 'Valorile mai mari pot îmbunătăți performanța';
 
   @override
   String get infiniteAnalysis => 'Analiză infinită';
@@ -2757,7 +2911,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get signupUsernameHint => 'Asigurați-vă că alegeți un nume de utilizator decent. Nu îl puteți schimba mai târziu și orice cont cu nume de utilizator indecent va fi închis!';
 
   @override
-  String get signupEmailHint => 'Îl vom folosi doar pentru resetarea parolei.';
+  String get signupEmailPromise => 'Îți vom trimite doar e-mailuri despre contul tău și niciodată nu îți vom distribui e-mailul.';
 
   @override
   String get password => 'Parolă';
@@ -3185,6 +3339,12 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get gameAsGIF => 'Salvați jocul ca fișier GIF';
+
+  @override
+  String get playerNames => 'Nume jucători';
+
+  @override
+  String get moveAnnotations => 'Notație mutări';
 
   @override
   String get pasteTheFenStringHere => 'Lipește textul FEN aici';
@@ -3635,6 +3795,15 @@ class AppLocalizationsRo extends AppLocalizations {
   String get invalidAuthenticationCode => 'Cod de autentificare incorect';
 
   @override
+  String get clearField => 'Șterge câmpul';
+
+  @override
+  String get orSeparator => 'Sau';
+
+  @override
+  String get logInByEmail => 'Autentificare prin e-mail';
+
+  @override
   String get emailMeALink => 'Trimite-mi un email cu link-ul';
 
   @override
@@ -4005,21 +4174,6 @@ class AppLocalizationsRo extends AppLocalizations {
   String get keyEnterOrExitVariation => 'acceptă/respinge variație';
 
   @override
-  String get keyRequestComputerAnalysis => 'Solicită analiza calculatorului, Învață din greșelile tale';
-
-  @override
-  String get keyNextLearnFromYourMistakes => 'Următorul (Învață din greșelile tale)';
-
-  @override
-  String get keyNextBlunder => 'Următoarea greșeală gravă';
-
-  @override
-  String get keyNextMistake => 'Următoarea greșeală';
-
-  @override
-  String get keyNextInaccuracy => 'Următoarea neacuratețe';
-
-  @override
   String get keyPreviousBranch => 'Ramura precedentă';
 
   @override
@@ -4038,7 +4192,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get togglePositionAnnotations => 'Activează/Dezactivează adnotările pozițiilor';
 
   @override
-  String get toggleObservationAnnotations => 'Toggle observation annotations';
+  String get toggleObservationAnnotations => 'Comută adnotări observaționale';
 
   @override
   String get variationArrowsInfo => 'Săgețile de variație vă permit să navigați fără a utiliza lista mutărilor.';
@@ -4300,6 +4454,9 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get brightness => 'Luminozitate';
+
+  @override
+  String get contrast => 'Contrast';
 
   @override
   String get hue => 'Nuanță';
@@ -4931,10 +5088,15 @@ class AppLocalizationsRo extends AppLocalizations {
   String get clearSearch => 'Șterge căutarea';
 
   @override
+  String thereAreNoResultsForX(String param) {
+    return 'Niciun rezultat pentru \"$param\"';
+  }
+
+  @override
   String get tags => 'Etichete';
 
   @override
-  String get enPassant => 'En passant';
+  String get enPassant => 'En passant legale';
 
   @override
   String opponentLeftCounter(int count) {

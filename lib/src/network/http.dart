@@ -25,7 +25,7 @@ import 'package:lichess_mobile/src/constants.dart';
 import 'package:lichess_mobile/src/model/auth/auth_controller.dart';
 import 'package:lichess_mobile/src/model/auth/bearer.dart';
 import 'package:lichess_mobile/src/model/common/preloaded_data.dart';
-import 'package:lichess_mobile/src/model/http_log/http_log_storage.dart';
+import 'package:lichess_mobile/src/model/log/http_log_storage.dart';
 import 'package:lichess_mobile/src/model/user/user.dart';
 import 'package:lichess_mobile/src/network/aggregator.dart';
 import 'package:logging/logging.dart';
@@ -196,6 +196,7 @@ Future<bool> downloadFile(
   Client client,
   Uri url,
   File file, {
+  int? expectedLength,
   void Function(int received, int length)? onProgress,
 }) async {
   _logger.fine('Downloading $url to ${file.path}');
@@ -204,12 +205,15 @@ Future<bool> downloadFile(
   final sink = file.openWrite();
 
   int received = 0;
+  final totalLength = response.contentLength ?? expectedLength;
 
   try {
     await response.stream
         .map((s) {
           received += s.length;
-          onProgress?.call(received, response.contentLength!);
+          if (totalLength != null && totalLength > 0) {
+            onProgress?.call(received, totalLength);
+          }
           return s;
         })
         .pipe(sink);
@@ -235,10 +239,14 @@ Future<bool> downloadFiles(
   Client client,
   List<Uri> urls,
   List<File> files, {
+  List<int>? expectedLengths,
   void Function(int received, int length)? onProgress,
 }) async {
   if (urls.length != files.length) {
     throw ArgumentError('Urls and files must have the same length.');
+  }
+  if (expectedLengths != null && expectedLengths.length != urls.length) {
+    throw ArgumentError('expectedLengths must have the same length as urls.');
   }
 
   // aggregrate progress of all files
@@ -254,6 +262,7 @@ Future<bool> downloadFiles(
         client,
         url,
         file,
+        expectedLength: expectedLengths?[index],
         onProgress: (received, length) {
           fileReceived[url] = received;
           fileLengths[url] = length;
@@ -311,9 +320,10 @@ class _RegisterCallbackClient extends BaseClient {
 
 /// Lichess HTTP client.
 ///
-/// * All requests made with [head], [get], [post], [put], [patch], [delete] target
-/// the lichess server, defined in [kLichessHost]. It does not apply to the low-level
-/// [send] method.
+/// * Requests made with [head], [get], [post], [put], [patch], [delete] that contain
+/// only a path (no host or scheme) are automatically routed to the lichess server
+/// defined in [kLichessHost]. If the URL already contains a host and scheme, it is
+/// used as-is. It does not apply to the low-level [send] method.
 /// * Sets the Authorization header when a token has been stored.
 /// * Sets the user-agent header with the app version, build number, and device info. If the user is logged in, it also includes the user's id.
 /// * Logs all requests and responses with status code >= 400.
@@ -321,6 +331,8 @@ class _RegisterCallbackClient extends BaseClient {
 /// and deletes the authUser if it's not.
 class LichessClient implements Client {
   LichessClient(this._inner, this._ref);
+
+  static const defaultRequestTimeout = Duration(seconds: 15);
 
   final Ref _ref;
   final Client _inner;
@@ -343,7 +355,7 @@ class LichessClient implements Client {
     _logger.info('${request.method} ${request.url} ${request.headers['User-Agent']}');
 
     try {
-      final response = await _inner.send(request);
+      final response = await _inner.send(request).timeout(defaultRequestTimeout);
 
       _logIfError(response);
 
@@ -434,7 +446,7 @@ class LichessClient implements Client {
   ]) async {
     final request = Request(
       method,
-      lichessUri(url.path, url.hasQuery ? url.queryParameters : null),
+      url.host.isNotEmpty ? url : lichessUri(url.path, url.hasQuery ? url.queryParameters : null),
     );
 
     if (headers != null) request.headers.addAll(headers);

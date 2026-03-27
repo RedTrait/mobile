@@ -67,6 +67,9 @@ class AppLocalizationsId extends AppLocalizations {
   String get mobileMustBeLoggedIn => 'Anda harus masuk untuk melihat halaman ini.';
 
   @override
+  String get mobileNewGame => 'New game';
+
+  @override
   String get mobileNoSearchResults => 'Tidak ada hasil';
 
   @override
@@ -276,6 +279,39 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get mobilePreviousPage => 'Previous';
+
+  @override
+  String get mobileOrImportPgnFile => 'Or import a PGN file';
+
+  @override
+  String get variantStandardTitle => 'Aturan catur standar (FIDE)';
+
+  @override
+  String get variantChess960Title => 'Posisi awal buah-buah di baris belakang diacak.';
+
+  @override
+  String get variantKingOfTheHillTitle => 'Bawa raja Anda ke tengah papan untuk memenangkan permainan.';
+
+  @override
+  String get variantThreeCheckTitle => 'Skak lawan 3 kali untuk memenangkan permainan.';
+
+  @override
+  String get variantAntichessTitle => 'Kehilangan semua buah Anda (atau mengalami langkah buntu) untuk memenangkan permainan.';
+
+  @override
+  String get variantAtomicTitle => 'Ledakkan raja lawan untuk menang.';
+
+  @override
+  String get variantHordeTitle => 'Satu sisi memiliki banyak pion, sisi lainnya memiliki pasukan normal.';
+
+  @override
+  String get variantRacingKingsTitle => 'Bawa raja Anda ke sisi seberang papan untuk menang.';
+
+  @override
+  String get variantCrazyhouseTitle => 'Buah yang ditangkap dapat diletakkan kembali ke papan alih-alih menggerakkan buah.';
+
+  @override
+  String get variantFromPositionTitle => 'Catur standar dari posisi kustom';
 
   @override
   String get activityActivity => 'Aktivitas';
@@ -878,6 +914,9 @@ class AppLocalizationsId extends AppLocalizations {
   String get broadcastScore => 'Score';
 
   @override
+  String get broadcastStandingsDisclaimer => 'Standings are calculated using broadcasted games and may differ from official results.';
+
+  @override
   String get broadcastAllTeams => 'All teams';
 
   @override
@@ -922,12 +961,82 @@ class AppLocalizationsId extends AppLocalizations {
   }
 
   @override
+  String get broadcastMatchPoints => 'Match Points';
+
+  @override
+  String get broadcastGamePoints => 'Game Points';
+
+  @override
+  String get broadcastMatches => 'Matches';
+
+  @override
+  String get broadcastMatchHistory => 'Match History';
+
+  @override
+  String get broadcastTeamResults => 'Team Results';
+
+  @override
+  String broadcastTermsAutomaticallyTranslated(String param) {
+    return 'The following term(s) will be automatically translated: $param.';
+  }
+
+  @override
   String broadcastRoundX(String param) {
     return 'Round $param';
   }
 
   @override
   String get broadcastDefaultRoundNameHelp => 'Keeping the default name will automatically translate it to all other languages.';
+
+  @override
+  String get broadcastOpenTournament => 'Open';
+
+  @override
+  String get broadcastWomenTournament => 'Women';
+
+  @override
+  String get broadcastMenTournament => 'Men';
+
+  @override
+  String get broadcastGirlsTournament => 'Girls';
+
+  @override
+  String get broadcastBoysTournament => 'Boys';
+
+  @override
+  String broadcastOpenUnderXAgeTournament(String param) {
+    return 'Open U$param';
+  }
+
+  @override
+  String broadcastGirlsUnderXAgeTournament(String param) {
+    return 'Girls U$param';
+  }
+
+  @override
+  String broadcastBoysUnderXAgeTournament(String param) {
+    return 'Boys U$param';
+  }
+
+  @override
+  String get broadcastQuarterfinals => 'Quarterfinals';
+
+  @override
+  String get broadcastSemifinals => 'Semifinals';
+
+  @override
+  String get broadcastFinals => 'Finals';
+
+  @override
+  String get broadcastTiebreaks => 'Tiebreaks';
+
+  @override
+  String broadcastGameX(String param) {
+    return 'Game $param';
+  }
+
+  @override
+  String get broadcastKnockouts => 'Knockouts';
 
   @override
   String broadcastNbBroadcasts(int count) {
@@ -1786,6 +1895,12 @@ class AppLocalizationsId extends AppLocalizations {
   String get puzzleThemeCapturingDefenderDescription => 'Memakan bidak yang sangat penting untuk menjaga bidak lain, memungkinkan bagian yang sekarang tidak terlindungi untuk ditangkap pada langkah berikut.';
 
   @override
+  String get puzzleThemeCollinearMove => 'Collinear move';
+
+  @override
+  String get puzzleThemeCollinearMoveDescription => 'Two opposing pieces face each other, and one slides along the line of attack without capturing the enemy piece.';
+
+  @override
   String get puzzleThemeCornerMate => 'Corner mate';
 
   @override
@@ -1867,6 +1982,12 @@ class AppLocalizationsId extends AppLocalizations {
   String get puzzleThemeEnPassantDescription => 'Taktik melibatkan aturan \"en passant\", yang mana pion dapat makan pion lawan yang baru saja melangkah 2 petak awal.';
 
   @override
+  String get puzzleThemeEpauletteMate => 'Epaulette mate';
+
+  @override
+  String get puzzleThemeEpauletteMateDescription => 'Two adjacent escape squares for a checked king are occupied by other pieces.';
+
+  @override
   String get puzzleThemeExposedKing => 'Raja tak terlindung';
 
   @override
@@ -1919,6 +2040,12 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get puzzleThemeMorphysMateDescription => 'Use the bishop to check the king, while your rook helps to confine it.';
+
+  @override
+  String get puzzleThemeSwallowstailMate => 'Swallow\'s tail mate';
+
+  @override
+  String get puzzleThemeSwallowstailMateDescription => 'A checkmate pattern that visually resembles the appearance of a swallow’s tail, similar to a V shape.';
 
   @override
   String get puzzleThemeTriangleMate => 'Triangle mate';
@@ -2191,6 +2318,12 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get orLetYourOpponentScanQrCode => 'Atau minta lawan Anda memindai kode QR ini';
+
+  @override
+  String get reusableChallengeUrl => 'Reusable challenge URL';
+
+  @override
+  String get permanentLinkForAnyoneToChallengeYou => 'A permanent link for anyone to challenge you with these exact settings.';
 
   @override
   String get waiting => 'Menunggu';
@@ -2542,10 +2675,31 @@ class AppLocalizationsId extends AppLocalizations {
   String get multipleLines => 'Beberapa variasi';
 
   @override
+  String get multipleLinesDescription => 'Set number of evaluation lines and move arrows on the board';
+
+  @override
+  String get searchTime => 'Search time';
+
+  @override
+  String get searchTimeDescription => 'Set time to evaluate fresh positions';
+
+  @override
+  String get threads => 'Threads';
+
+  @override
+  String get threadsDescription => 'Set this below your CPU\'s thread count, the ticks mark a good safe choice';
+
+  @override
+  String get threadsDescriptionMobile => 'More threads will use more battery for better analysis';
+
+  @override
   String get cpus => 'CPU';
 
   @override
   String get memory => 'Memori';
+
+  @override
+  String get memoryDescription => 'Higher values may improve performance';
 
   @override
   String get infiniteAnalysis => 'Menganalisa tanpa ada batasan';
@@ -2705,7 +2859,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get signupUsernameHint => 'Pastikan username Anda senonoh. Anda tidak dapat menggantinya lagi dan akun dengan username tidak senonoh akan di tutup!';
 
   @override
-  String get signupEmailHint => 'Ini hanya akan digunakan untuk setel ulang password.';
+  String get signupEmailPromise => 'We will only send you emails about your account and never share your email.';
 
   @override
   String get password => 'Kata sandi';
@@ -3133,6 +3287,12 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get gameAsGIF => 'Simpan sebagai GIF';
+
+  @override
+  String get playerNames => 'Player names';
+
+  @override
+  String get moveAnnotations => 'Move annotations';
 
   @override
   String get pasteTheFenStringHere => 'Paste string FEN di sini';
@@ -3583,6 +3743,15 @@ class AppLocalizationsId extends AppLocalizations {
   String get invalidAuthenticationCode => 'Kode autentikasi salah';
 
   @override
+  String get clearField => 'Clear field';
+
+  @override
+  String get orSeparator => 'Or';
+
+  @override
+  String get logInByEmail => 'Log in by email';
+
+  @override
   String get emailMeALink => 'Emailkan ke saya sebuah link';
 
   @override
@@ -3953,21 +4122,6 @@ class AppLocalizationsId extends AppLocalizations {
   String get keyEnterOrExitVariation => 'masuk/keluar dari variasi';
 
   @override
-  String get keyRequestComputerAnalysis => 'Minta analisis komputer, belajar dari kesalahan anda';
-
-  @override
-  String get keyNextLearnFromYourMistakes => 'Berikutnya (Belajar dari kesalahan anda)';
-
-  @override
-  String get keyNextBlunder => 'Blunder selanjutnya';
-
-  @override
-  String get keyNextMistake => 'Kesalahan berikutnya';
-
-  @override
-  String get keyNextInaccuracy => 'Ketidakakuratan selanjutnya';
-
-  @override
   String get keyPreviousBranch => 'Cabang sebelumnya';
 
   @override
@@ -4248,6 +4402,9 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get brightness => 'Kecerahan';
+
+  @override
+  String get contrast => 'Contrast';
 
   @override
   String get hue => 'Rona';
@@ -4877,6 +5034,11 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get clearSearch => 'Bersihkan pencarian';
+
+  @override
+  String thereAreNoResultsForX(String param) {
+    return 'No results for \"$param\"';
+  }
 
   @override
   String get tags => 'Label';

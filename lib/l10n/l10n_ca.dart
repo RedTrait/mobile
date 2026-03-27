@@ -9,7 +9,7 @@ class AppLocalizationsCa extends AppLocalizations {
   AppLocalizationsCa([String locale = 'ca']) : super(locale);
 
   @override
-  String get mobileAccountPreferences => 'Preferencies del compte';
+  String get mobileAccountPreferences => 'Preferències del compte';
 
   @override
   String get mobileAccountPreferencesHelp => 'Aquestes configuracions s\'apliquen al teu compte de Lichess i s\'utilitzaran en tots els dispositius.';
@@ -65,6 +65,9 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String get mobileMustBeLoggedIn => 'Has d\'estar connectat per veure aquesta pàgina.';
+
+  @override
+  String get mobileNewGame => 'Nova partida';
 
   @override
   String get mobileNoSearchResults => 'Sense resultats';
@@ -242,40 +245,73 @@ class AppLocalizationsCa extends AppLocalizations {
   String get mobileWelcomeToLichessApp => 'Benvingut/da l\'aplicació de Lichess.org!';
 
   @override
-  String get mobileViewGame => 'View Game';
+  String get mobileViewGame => 'Veure la partida';
 
   @override
-  String get mobileCustomizeHomeTip => 'Tip: You can add more widgets to the Home Screen or remove those you don\'t need!';
+  String get mobileCustomizeHomeTip => 'Truc: Podeu afegir més ginys a la pantalla d\'inici i eliminar els que no necessiteu!';
 
   @override
-  String get mobileCustomizeHomeTipDismiss => 'Dismiss';
+  String get mobileCustomizeHomeTipDismiss => 'Descarta';
 
   @override
-  String get mobileCustomizeButton => 'Customize';
+  String get mobileCustomizeButton => 'Personalitza';
 
   @override
-  String get mobileStopShowingThreat => 'Stop showing threat';
+  String get mobileStopShowingThreat => 'No mostris l\'amenaça';
 
   @override
-  String get mobileTournamentCompleted => 'Completed';
+  String get mobileTournamentCompleted => 'Finalitzat';
 
   @override
-  String get mobileTournamentJumpToMyPage => 'Jump to my page';
+  String get mobileTournamentJumpToMyPage => 'Anar a la meva pàgina';
 
   @override
-  String get mobileDisplayModeCompact => 'Compact';
+  String get mobileDisplayModeCompact => 'Compacte';
 
   @override
-  String get mobileDisplayModeDetailed => 'Detailed';
+  String get mobileDisplayModeDetailed => 'Detallat';
 
   @override
-  String get mobileOpeningExplorerNotAvailableOffline => 'Opening Explorer is not available offline.';
+  String get mobileOpeningExplorerNotAvailableOffline => 'L\'explorador d\'obertures no està disponible sense connexió.';
 
   @override
-  String get mobileChallengeCreated => 'Challenge created: You will be notified when the game starts.\\nYou can access it from the home tab.';
+  String get mobileChallengeCreated => 'Repte creat: Sereu notificats quan comenci la partida.\\nPodeu accedir-hi des de la pantalla d\'inici.';
 
   @override
-  String get mobilePreviousPage => 'Previous';
+  String get mobilePreviousPage => 'Anterior';
+
+  @override
+  String get mobileOrImportPgnFile => 'O importa un arxiu PGN';
+
+  @override
+  String get variantStandardTitle => 'Regles d\'escacs estàndard (FIDE)';
+
+  @override
+  String get variantChess960Title => 'La posició inicial de les peces a la primera fila és aleatòria.';
+
+  @override
+  String get variantKingOfTheHillTitle => 'Porta el teu rei al centre per guanyar la partida.';
+
+  @override
+  String get variantThreeCheckTitle => 'Fes escac 3 vegades al teu oponent per guanyar la partida.';
+
+  @override
+  String get variantAntichessTitle => 'Perds tot les teves peces (o aconsegueix l\'ofegat) per guanyar la partida.';
+
+  @override
+  String get variantAtomicTitle => 'Explota el rei del teu oponent per guanyar la partida.';
+
+  @override
+  String get variantHordeTitle => 'Un jugador té un gran nombre de peons, l\'altre té un exèrcit normal.';
+
+  @override
+  String get variantRacingKingsTitle => 'Fes arribar el teu rei a l\'altre costat del tauler per guanyar.';
+
+  @override
+  String get variantCrazyhouseTitle => 'Les peces capturades es poden tornar a ficar al tauler en comptes de moure una peça.';
+
+  @override
+  String get variantFromPositionTitle => 'Escacs estàndard des d\'una posició personalitzada';
 
   @override
   String get activityActivity => 'Activitat';
@@ -897,6 +933,9 @@ class AppLocalizationsCa extends AppLocalizations {
   String get broadcastScore => 'Puntuació';
 
   @override
+  String get broadcastStandingsDisclaimer => 'La classificació es calcula utilitzant les partides de la retransmissió i pot variar dels resultats oficials.';
+
+  @override
   String get broadcastAllTeams => 'Tots els equips';
 
   @override
@@ -941,12 +980,82 @@ class AppLocalizationsCa extends AppLocalizations {
   }
 
   @override
+  String get broadcastMatchPoints => 'Punts d\'enfentraments';
+
+  @override
+  String get broadcastGamePoints => 'Punts de partides';
+
+  @override
+  String get broadcastMatches => 'Enfrentaments';
+
+  @override
+  String get broadcastMatchHistory => 'Historial d\'enfrentaments';
+
+  @override
+  String get broadcastTeamResults => 'Resultats per equip';
+
+  @override
+  String broadcastTermsAutomaticallyTranslated(String param) {
+    return 'Els termes següents es traduiran automàticament: $param.';
+  }
+
+  @override
   String broadcastRoundX(String param) {
     return 'Ronda $param';
   }
 
   @override
   String get broadcastDefaultRoundNameHelp => 'Deixant el nom per defecte el traduirà automàticament a tots els altres llenguatges.';
+
+  @override
+  String get broadcastOpenTournament => 'Obert';
+
+  @override
+  String get broadcastWomenTournament => 'Dones';
+
+  @override
+  String get broadcastMenTournament => 'Home';
+
+  @override
+  String get broadcastGirlsTournament => 'Noies';
+
+  @override
+  String get broadcastBoysTournament => 'Nois';
+
+  @override
+  String broadcastOpenUnderXAgeTournament(String param) {
+    return 'Obert Sub$param';
+  }
+
+  @override
+  String broadcastGirlsUnderXAgeTournament(String param) {
+    return 'Noies Sub$param';
+  }
+
+  @override
+  String broadcastBoysUnderXAgeTournament(String param) {
+    return 'Nois Sub$param';
+  }
+
+  @override
+  String get broadcastQuarterfinals => 'Quarts de final';
+
+  @override
+  String get broadcastSemifinals => 'Semifinals';
+
+  @override
+  String get broadcastFinals => 'Finals';
+
+  @override
+  String get broadcastTiebreaks => 'Desempats';
+
+  @override
+  String broadcastGameX(String param) {
+    return 'Partida $param';
+  }
+
+  @override
+  String get broadcastKnockouts => 'Eliminatòria';
 
   @override
   String broadcastNbBroadcasts(int count) {
@@ -1777,7 +1886,7 @@ class AppLocalizationsCa extends AppLocalizations {
   String get puzzleThemeBalestraMate => 'Mat de la balestra';
 
   @override
-  String get puzzleThemeBalestraMateDescription => 'A bishop delivers the checkmate, while a queen blocks the remaining escape squares';
+  String get puzzleThemeBalestraMateDescription => 'Un alfil fa el mat, mentre una dama bloqueja les caselles d\'escapada restants';
 
   @override
   String get puzzleThemeBlindSwineMate => 'Mat del porc cec';
@@ -1810,6 +1919,12 @@ class AppLocalizationsCa extends AppLocalizations {
   String get puzzleThemeCapturingDefenderDescription => 'Menjar una peça que és vital per defensar una altra, fent que es pugui menjar la peça que ara ja no està defensada.';
 
   @override
+  String get puzzleThemeCollinearMove => 'Moviment col·lineal';
+
+  @override
+  String get puzzleThemeCollinearMoveDescription => 'Dues peces oposades es miren l\'una a l\'altra i una de les dues s\'aparta de la línia d\'atac sense captura la peça enemiga.';
+
+  @override
   String get puzzleThemeCornerMate => 'Mat de la cantonada';
 
   @override
@@ -1834,7 +1949,7 @@ class AppLocalizationsCa extends AppLocalizations {
   String get puzzleThemeDoubleBishopMateDescription => 'Dos alfils atacant en diagonals adjacents fan mat a un rei que queda obstruït per peces amigues.';
 
   @override
-  String get puzzleThemeDovetailMate => 'Mat de la coça';
+  String get puzzleThemeDovetailMate => 'Mat de la cua de colom';
 
   @override
   String get puzzleThemeDovetailMateDescription => 'Una dama fa mat a un rei adjacent que té les dues caselles adjacents ocupades per peces amigues.';
@@ -1891,6 +2006,12 @@ class AppLocalizationsCa extends AppLocalizations {
   String get puzzleThemeEnPassantDescription => 'Una tàctica que involucra la regla de captura de pas, on un peó pot capturar el peó d\'un oponent que l\'ha passat utilitzant el seu moviment inicial de dues caselles.';
 
   @override
+  String get puzzleThemeEpauletteMate => 'Mat de l\'espatllera';
+
+  @override
+  String get puzzleThemeEpauletteMateDescription => 'Dues caselles adjacents al rei escaquejat estan ocupades per altres peces.';
+
+  @override
   String get puzzleThemeExposedKing => 'Rei exposat';
 
   @override
@@ -1943,6 +2064,12 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String get puzzleThemeMorphysMateDescription => 'Utilitza l\'alfil per fer escac al rei mentre la torre ajuda a confinar-lo.';
+
+  @override
+  String get puzzleThemeSwallowstailMate => 'Mat de la cua d\'oreneta';
+
+  @override
+  String get puzzleThemeSwallowstailMateDescription => 'Un mat que visualment ens recorda la forma de la cua d\'una oreneta, similar a una forma de V.';
 
   @override
   String get puzzleThemeTriangleMate => 'Mat del triangle';
@@ -2215,6 +2342,12 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String get orLetYourOpponentScanQrCode => 'O deixeu que el vostre oponent escanegi aquest codi QR';
+
+  @override
+  String get reusableChallengeUrl => 'URL repte reutilitzable';
+
+  @override
+  String get permanentLinkForAnyoneToChallengeYou => 'Un enllaç permanent perquè qualsevol et pugui reptar amb aquestes configuracions exactes.';
 
   @override
   String get waiting => 'Esperant';
@@ -2566,10 +2699,31 @@ class AppLocalizationsCa extends AppLocalizations {
   String get multipleLines => 'Múltiples línies';
 
   @override
+  String get multipleLinesDescription => 'Estableix el nombre de línies i moviments avaluar al tauler';
+
+  @override
+  String get searchTime => 'Temps de cerca';
+
+  @override
+  String get searchTimeDescription => 'Estableix un temps per avaluar les posicions fresques';
+
+  @override
+  String get threads => 'Fils';
+
+  @override
+  String get threadsDescription => 'Establiu el valor per sota del vostre nombre de fils del CPUs. La marca és un bon valor segur';
+
+  @override
+  String get threadsDescriptionMobile => 'Més fils utilitzarà més bateria per millors anàlisis';
+
+  @override
   String get cpus => 'CPUs';
 
   @override
   String get memory => 'Memòria';
+
+  @override
+  String get memoryDescription => 'Valors més alts pot millorar el rendiment';
 
   @override
   String get infiniteAnalysis => 'Anàlisi il·limitada';
@@ -2729,7 +2883,7 @@ class AppLocalizationsCa extends AppLocalizations {
   String get signupUsernameHint => 'Assegureu-vos d\'escollir un nom d\'usuari amigable. No el podreu canviar més tard i qualsevol compte amb nom d\'usuaris inapropiats es tancarà!';
 
   @override
-  String get signupEmailHint => 'Només s\'utilitzarà per restablir la contrasenya.';
+  String get signupEmailPromise => 'Només t\'enviarem correus sobre el teu compte i mai compartirem el teu correu electrònic.';
 
   @override
   String get password => 'Contrasenya';
@@ -3157,6 +3311,12 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String get gameAsGIF => 'Partida com a GIF';
+
+  @override
+  String get playerNames => 'Noms dels jugadors';
+
+  @override
+  String get moveAnnotations => 'Anotacions de les jugades';
 
   @override
   String get pasteTheFenStringHere => 'Enganxa el text FEN aquí';
@@ -3607,6 +3767,15 @@ class AppLocalizationsCa extends AppLocalizations {
   String get invalidAuthenticationCode => 'Codi d\'autenticació invàlid';
 
   @override
+  String get clearField => 'Neteja el camp';
+
+  @override
+  String get orSeparator => 'O';
+
+  @override
+  String get logInByEmail => 'Identificat amb el correu electrònic';
+
+  @override
   String get emailMeALink => 'Envieu-me un enllaç per correu electrònic';
 
   @override
@@ -3977,21 +4146,6 @@ class AppLocalizationsCa extends AppLocalizations {
   String get keyEnterOrExitVariation => 'entrar/sortir variació';
 
   @override
-  String get keyRequestComputerAnalysis => 'Demana una anàlisi computeritzada, aprèn dels teus errors';
-
-  @override
-  String get keyNextLearnFromYourMistakes => 'Següent (apren dels teus errors)';
-
-  @override
-  String get keyNextBlunder => 'Següent errada';
-
-  @override
-  String get keyNextMistake => 'Següent errada greu';
-
-  @override
-  String get keyNextInaccuracy => 'Següent imprecisió';
-
-  @override
   String get keyPreviousBranch => 'Branca anterior';
 
   @override
@@ -4144,7 +4298,7 @@ class AppLocalizationsCa extends AppLocalizations {
   String get analysisShapesHowTo => 'Pitja la tecla Shift + clic o feu clic dret per dibuixar cercles i fletxes al tauler.';
 
   @override
-  String get primaryColorArrowsHowTo => 'Ctrl or shift = red; command, alt, or meta = blue; a key from each = yellow.';
+  String get primaryColorArrowsHowTo => 'Ctrl o majúscules = vermell; comandament, alt o meta = blau; una tecla de cada = groc.';
 
   @override
   String get letOtherPlayersMessageYou => 'Deixa que altres jugadors t\'envïin missatges';
@@ -4272,6 +4426,9 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String get brightness => 'Brillantor';
+
+  @override
+  String get contrast => 'Contrast';
 
   @override
   String get hue => 'Tonalitat';
@@ -4901,6 +5058,11 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String get clearSearch => 'Neteja la cerca';
+
+  @override
+  String thereAreNoResultsForX(String param) {
+    return 'No hi ha resultats per \"$param\"';
+  }
 
   @override
   String get tags => 'Etiquetes';

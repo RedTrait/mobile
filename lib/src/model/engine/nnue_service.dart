@@ -60,6 +60,29 @@ class NnueService {
     return (bigNet: bigNetFile, smallNet: smallNetFile);
   }
 
+  Future<bool> hasOutdatedNNUEFiles() async {
+    if (await checkNNUEFiles()) {
+      return false;
+    }
+
+    final appSupportDirectory = _ref.read(preloadedDataProvider).requireValue.appSupportDirectory;
+    if (appSupportDirectory == null) {
+      return false;
+    }
+
+    final NNUEFiles files = nnueFiles;
+
+    await for (final entity in appSupportDirectory.list(followLinks: false)) {
+      if (entity is File &&
+          entity.path.endsWith('.nnue') &&
+          entity.path != files.bigNet.path &&
+          entity.path != files.smallNet.path) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   /// Check the presence and integrity of the NNUE files.
   Future<bool> checkNNUEFiles() async {
     final NNUEFiles files;
@@ -122,6 +145,7 @@ class NnueService {
           client,
           [bigNetUrl, smallNetUrl],
           [bigNet, smallNet],
+          expectedLengths: [bigNetExpectedSize, smallNetExpectedSize],
           onProgress: (received, length) {
             _nnueDownloadProgress.value = received / length;
           },
@@ -141,7 +165,9 @@ class NnueService {
             barrierDismissible: true,
             builder: (context) {
               return AlertDialog.adaptive(
-                content: const Text('Are you sure you want to download the NNUE files (79MB)?'),
+                content: const Text(
+                  'Are you sure you want to download the NNUE files ($nnueTotalSizeMB)?',
+                ),
                 actions: [
                   PlatformDialogAction(
                     child: const Text('OK'),

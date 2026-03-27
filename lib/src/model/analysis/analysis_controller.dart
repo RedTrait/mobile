@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
 import 'package:lichess_mobile/src/model/account/account_service.dart';
+import 'package:lichess_mobile/src/model/analysis/analysis_player.dart';
 import 'package:lichess_mobile/src/model/analysis/analysis_preferences.dart';
 import 'package:lichess_mobile/src/model/analysis/common_analysis_state.dart';
 import 'package:lichess_mobile/src/model/analysis/forecast.dart';
@@ -23,7 +24,6 @@ import 'package:lichess_mobile/src/model/common/socket.dart';
 import 'package:lichess_mobile/src/model/common/uci.dart';
 import 'package:lichess_mobile/src/model/engine/evaluation_mixin.dart';
 import 'package:lichess_mobile/src/model/engine/evaluation_preferences.dart';
-import 'package:lichess_mobile/src/model/engine/evaluation_service.dart';
 import 'package:lichess_mobile/src/model/game/exported_game.dart';
 import 'package:lichess_mobile/src/model/game/game_repository.dart';
 import 'package:lichess_mobile/src/model/game/game_repository_providers.dart';
@@ -45,12 +45,19 @@ sealed class AnalysisOptions with _$AnalysisOptions {
   const AnalysisOptions._();
 
   const factory AnalysisOptions.standalone({
+    required Variant variant,
+    @Default(null) int? initialMoveCursor,
+    @Default(Side.white) Side orientation,
+  }) = Standalone;
+
+  const factory AnalysisOptions.pgn({
+    required StringId id,
     required Side orientation,
     int? initialMoveCursor,
     required String pgn,
     required Variant variant,
     required bool isComputerAnalysisAllowed,
-  }) = Standalone;
+  }) = Pgn;
 
   const factory AnalysisOptions.archivedGame({
     required Side orientation,
@@ -68,16 +75,16 @@ sealed class AnalysisOptions with _$AnalysisOptions {
 
   GameId? get gameId => switch (this) {
     ArchivedGame(:final gameId) => gameId,
-    Standalone() => null,
+    Pgn() || Standalone() => null,
     ActiveCorrespondenceGame(:final gameFullId) => gameFullId.gameId,
   };
-}
 
-class UnsupportedVariantException implements Exception {
-  final Variant variant;
-  final GameId gameId;
-
-  const UnsupportedVariantException(this.variant, this.gameId);
+  StringId get contextId => switch (this) {
+    ArchivedGame(:final gameId) => gameId,
+    Pgn(:final id) => id,
+    Standalone() => const StringId('standalone'),
+    ActiveCorrespondenceGame(:final gameFullId) => gameFullId.gameId,
+  };
 }
 
 enum AnalysisGameResult {
@@ -91,6 +98,7 @@ enum AnalysisGameResult {
       '1-0' => AnalysisGameResult.whiteWins,
       '0-1' => AnalysisGameResult.blackWins,
       '½-½' => AnalysisGameResult.draw,
+      '1/2-1/2' => AnalysisGameResult.draw,
       _ => AnalysisGameResult.other,
     };
   }
@@ -110,7 +118,7 @@ final analysisControllerProvider = AsyncNotifierProvider.autoDispose
       name: 'AnalysisControllerProvider',
     );
 
-({Root root, UciPath path})? _savedStandalone;
+({Root root, UciPath path, Variant variant})? _savedStandalone;
 
 void clearSavedStandaloneAnalysis() {
   _savedStandalone = null;
@@ -173,19 +181,25 @@ class AnalysisController extends AsyncNotifier<AnalysisState>
         {
           archivedGame = await ref.watch(archivedGameProvider(gameId).future);
           _variant = archivedGame!.meta.variant;
-          if (!_variant.isReadSupported) {
-            throw UnsupportedVariantException(_variant, gameId);
-          }
           pgn = archivedGame.makePgn();
           opening = archivedGame.data.opening;
           serverAnalysis = archivedGame.serverAnalysis;
           division = archivedGame.meta.division;
           activeCorrespondenceGame = null;
         }
-      case Standalone(:final variant, pgn: final gamePgn):
+      case Pgn(:final variant, pgn: final gamePgn):
         {
           _variant = variant;
           pgn = gamePgn;
+          opening = null;
+          serverAnalysis = null;
+          division = null;
+          activeCorrespondenceGame = null;
+        }
+      case Standalone(:final variant):
+        {
+          _variant = _savedStandalone != null ? _savedStandalone!.variant : variant;
+          pgn = '';
           opening = null;
           serverAnalysis = null;
           division = null;
@@ -194,7 +208,7 @@ class AnalysisController extends AsyncNotifier<AnalysisState>
           // We want to keep the standalone analysis session alive even if the user navigates away
           ref.onCancel(() {
             if (_root.mainline.isNotEmpty) {
-              _savedStandalone = (root: _root, path: _currentPath);
+              _savedStandalone = (root: _root, path: _currentPath, variant: _variant);
             }
           });
         }
@@ -221,6 +235,7 @@ class AnalysisController extends AsyncNotifier<AnalysisState>
               'Event': '?',
               'Site': '?',
               'Date': _dateFormat.format(DateTime.now()),
+              'Variant': _variant.label,
               'Round': '?',
               'White': '?',
               'Black': '?',
@@ -236,15 +251,16 @@ class AnalysisController extends AsyncNotifier<AnalysisState>
     final isGameFinished = pgnHeaders['Result'] != '*';
 
     final isComputerAnalysisAllowed = switch (options) {
-      Standalone(:final isComputerAnalysisAllowed) => isComputerAnalysisAllowed,
+      Pgn(:final isComputerAnalysisAllowed) => isComputerAnalysisAllowed,
       ArchivedGame() => isGameFinished,
+      Standalone() => true,
       ActiveCorrespondenceGame() => false,
     };
 
     final List<Future<(UciPath, FullOpening)?>> openingFutures = [];
 
     _root = switch (options) {
-      Standalone(:final pgn) when _savedStandalone != null && pgn.isEmpty => _savedStandalone!.root,
+      Standalone() when _savedStandalone != null => _savedStandalone!.root,
       _ => Root.fromPgnGame(
         game,
         isLichessAnalysis: options.isLichessGameAnalysis,
@@ -284,7 +300,7 @@ class AnalysisController extends AsyncNotifier<AnalysisState>
         });
 
     final currentPath = switch (options) {
-      Standalone(:final pgn) when _savedStandalone != null && pgn.isEmpty => _savedStandalone!.path,
+      Standalone() when _savedStandalone != null => _savedStandalone!.path,
       _ => options.initialMoveCursor == null ? _root.mainlinePath : path,
     };
     final currentNode = _root.nodeAt(currentPath);
@@ -329,7 +345,9 @@ class AnalysisController extends AsyncNotifier<AnalysisState>
       gameId: options.gameId,
       archivedGame: archivedGame,
       currentPath: currentPath,
-      pathToLiveMove: isGameFinished || options is Standalone ? null : currentPath,
+      pathToLiveMove: isGameFinished || options is Standalone || options is Pgn
+          ? null
+          : currentPath,
       forecast: forecast,
       isOnMainline: _root.isOnMainline(currentPath),
       root: _root.view,
@@ -337,12 +355,12 @@ class AnalysisController extends AsyncNotifier<AnalysisState>
       pgnHeaders: pgnHeaders,
       pgnRootComments: rootComments,
       lastMove: lastMove,
-      pov: options.orientation,
+      pov: _variant == Variant.racingKings ? Side.white : options.orientation,
       contextOpening: opening,
       isComputerAnalysisAllowed: isComputerAnalysisAllowed,
       isServerAnalysisEnabled: prefs.enableServerAnalysis,
       evaluationContext: EvaluationContext(
-        id: options.gameId,
+        id: options.contextId,
         variant: _variant,
         initialPosition: _root.position,
       ),
@@ -451,10 +469,10 @@ class AnalysisController extends AsyncNotifier<AnalysisState>
     );
   }
 
-  void onUserMove(NormalMove move, {bool shouldReplace = false}) {
+  void onUserMove(Move move, {bool shouldReplace = false}) {
     if (!state.requireValue.currentPosition.isLegal(move)) return;
 
-    if (isPromotionPawnMove(state.requireValue.currentPosition, move)) {
+    if (move case NormalMove() when isPromotionPawnMove(state.requireValue.currentPosition, move)) {
       state = AsyncValue.data(state.requireValue.copyWith(promotionMove: move));
       return;
     }
@@ -679,15 +697,6 @@ class AnalysisController extends AsyncNotifier<AnalysisState>
     }
   }
 
-  Future<void> toggleEngineThreatMode() async {
-    if (state.hasValue) {
-      state = AsyncData(
-        state.requireValue.copyWith(engineInThreatMode: !state.requireValue.engineInThreatMode),
-      );
-      requestEval();
-    }
-  }
-
   void _setPath(
     UciPath path, {
     bool shouldForceShowVariation = false,
@@ -721,7 +730,7 @@ class AnalysisController extends AsyncNotifier<AnalysisState>
       if (!isNavigating && isForward) {
         final isCheck = currentNode.sanMove.isCheck;
         if (currentNode.sanMove.isCapture) {
-          ref.read(moveFeedbackServiceProvider).captureFeedback(check: isCheck);
+          ref.read(moveFeedbackServiceProvider).captureFeedback(curState.variant, check: isCheck);
         } else {
           ref.read(moveFeedbackServiceProvider).moveFeedback(check: isCheck);
         }
@@ -730,7 +739,7 @@ class AnalysisController extends AsyncNotifier<AnalysisState>
       else {
         final soundService = ref.read(soundServiceProvider);
         if (currentNode.sanMove.isCapture) {
-          soundService.play(Sound.capture);
+          soundService.playCaptureSound(curState.variant);
         } else {
           soundService.play(Sound.move);
         }
@@ -848,9 +857,16 @@ class AnalysisController extends AsyncNotifier<AnalysisState>
 
 @freezed
 sealed class AnalysisState
-    with _$AnalysisState
-    implements EvaluationMixinState, CommonAnalysisState {
+    with _$AnalysisState, AnalysisExplosionMixin, EvaluationMixinState<AnalysisState>
+    implements CommonAnalysisState {
   const AnalysisState._();
+
+  @override
+  ViewRoot get analysisRoot => root;
+
+  @override
+  AnalysisState withThreatMode(bool engineInThreatMode) =>
+      copyWith(engineInThreatMode: engineInThreatMode);
 
   const factory AnalysisState({
     /// The ID of the game if it's a lichess game.
@@ -917,7 +933,7 @@ sealed class AnalysisState
     Division? division,
 
     /// Optional ACPL chart data of the game, coming from lichess server analysis.
-    IList<Eval>? acplChartData,
+    IList<ExternalEval>? acplChartData,
 
     /// The PGN headers of the game.
     required IMap<String, String> pgnHeaders,
@@ -952,9 +968,8 @@ sealed class AnalysisState
       isEngineAvailable(prefs) ||
       (isComputerAnalysisAllowed && isServerAnalysisEnabled && hasServerAnalysis);
 
-  /// Whether the engine is allowed for this analysis and variant.
-  bool get isEngineAllowed =>
-      isComputerAnalysisAllowed && engineSupportedVariants.contains(variant);
+  /// Whether the engine is allowed for this analysis.
+  bool get isEngineAllowed => isComputerAnalysisAllowed;
 
   ViewNode? get liveMoveNode => pathToLiveMove != null
       ? pathToLiveMove!.isEmpty
@@ -978,6 +993,12 @@ sealed class AnalysisState
     final candidate = currentPath.stripPrefix(pathToLiveMove!);
     return forecast!.isCandidate(candidate) ? candidate : null;
   }
+
+  IList<PgnCommentShape> get pgnShapes => IList(
+    (currentNode.isRoot ? pgnRootComments : currentNode.comments)
+        ?.map((comment) => comment.shapes)
+        .flattened,
+  );
 
   /// If it's our turn and we have branched off from the main line, this is the move we would play
   /// if we to save the entire current path as a premove line.
@@ -1003,7 +1024,16 @@ sealed class AnalysisState
     position: currentPosition,
     savedEval: currentNode.eval,
     serverEval: currentNode.serverEval,
+    filters: (id: evaluationContext.id, path: currentPath),
   );
+
+  /// Creates an AnalysisPlayer from PGN headers for the given side.
+  ///
+  /// Used for pgn analysis to display player names and ratings if provided in the PGN.
+  AnalysisPlayer? playerFromPgnHeaders(Side side) {
+    if (archivedGame != null) return null;
+    return AnalysisPlayer.fromPgnHeaders(pgnHeaders, side);
+  }
 }
 
 @freezed

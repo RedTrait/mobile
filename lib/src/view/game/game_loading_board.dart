@@ -2,8 +2,9 @@ import 'package:dartchess/dartchess.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lichess_mobile/src/constants.dart';
 import 'package:lichess_mobile/src/model/challenge/challenge.dart';
+import 'package:lichess_mobile/src/model/common/chess.dart';
+import 'package:lichess_mobile/src/model/game/game_board_params.dart';
 import 'package:lichess_mobile/src/model/lobby/game_seek.dart';
 import 'package:lichess_mobile/src/model/lobby/lobby_numbers.dart';
 import 'package:lichess_mobile/src/utils/l10n_context.dart';
@@ -34,9 +35,7 @@ class _LobbyScreenLoadingContentState extends State<LobbyScreenLoadingContent> {
     return SafeArea(
       child: GameLayout(
         orientation: Side.white,
-        fen: kEmptyFen,
-        topTable: const SizedBox.shrink(),
-        bottomTable: const SizedBox.shrink(),
+        boardParams: GameBoardParams.emptyBoard,
         moves: const [],
         boardOverlay: Card(
           color: Theme.of(context).dialogTheme.backgroundColor,
@@ -136,9 +135,7 @@ class _ChallengeLoadingContentState extends State<ChallengeLoadingContent> {
     return SafeArea(
       child: GameLayout(
         orientation: Side.white,
-        fen: kEmptyFen,
-        topTable: const SizedBox.shrink(),
-        bottomTable: const SizedBox.shrink(),
+        boardParams: GameBoardParams.emptyBoard,
         moves: const [],
         boardOverlay: Card(
           color: Theme.of(context).dialogTheme.backgroundColor,
@@ -223,12 +220,24 @@ class StandaloneGameLoadingContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final lastMove = position?.lastMove;
     return Shimmer(
       child: SafeArea(
         child: GameLayout(
           orientation: position?.orientation ?? Side.white,
-          fen: position?.fen ?? kEmptyFen,
-          lastMove: position?.lastMove as NormalMove?,
+          boardParams: GameBoardParams.readonly(
+            fen: position?.fen ?? kEmptyFEN,
+            variant: Variant.standard,
+            pockets: null,
+          ),
+          lastMove: switch (lastMove) {
+            // In crazyhouse games, the "ongoing games" endpoint does not return the correct UCI for crazyhouse games,
+            // e.g. instead of P@c4 the UCI will be c4c4.
+            // This leads to a "duplicate key" error, since chessground would try to highlight the same square twice.
+            // The dropped role does not matter, since we just use it for the square highlight.
+            NormalMove(:final from, :final to) when from == to => DropMove(to: to, role: Role.pawn),
+            _ => lastMove,
+          },
           topTable: const LoadingPlayerWidget(),
           bottomTable: const LoadingPlayerWidget(),
           moves: const [],
@@ -300,9 +309,7 @@ class LoadGameError extends StatelessWidget {
           child: SafeArea(
             child: GameLayout(
               orientation: Side.white,
-              fen: kEmptyFen,
-              topTable: const SizedBox.shrink(),
-              bottomTable: const SizedBox.shrink(),
+              boardParams: GameBoardParams.emptyBoard,
               moves: const [],
               errorMessage: errorMessage,
             ),
@@ -341,9 +348,7 @@ class ChallengeDeclinedBoard extends StatelessWidget {
           child: SafeArea(
             child: GameLayout(
               orientation: Side.white,
-              fen: kEmptyFen,
-              topTable: const SizedBox.shrink(),
-              bottomTable: const SizedBox.shrink(),
+              boardParams: GameBoardParams.emptyBoard,
               moves: const [],
               boardOverlay: Card(
                 color: Theme.of(context).dialogTheme.backgroundColor,

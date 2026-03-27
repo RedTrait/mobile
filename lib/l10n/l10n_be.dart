@@ -67,6 +67,9 @@ class AppLocalizationsBe extends AppLocalizations {
   String get mobileMustBeLoggedIn => 'Вам патрэбна ўвайсці ў уліковы запіс каб паглядзець гэтую старонку.';
 
   @override
+  String get mobileNewGame => 'New game';
+
+  @override
   String get mobileNoSearchResults => 'Няма вынікаў';
 
   @override
@@ -276,6 +279,39 @@ class AppLocalizationsBe extends AppLocalizations {
 
   @override
   String get mobilePreviousPage => 'Previous';
+
+  @override
+  String get mobileOrImportPgnFile => 'Or import a PGN file';
+
+  @override
+  String get variantStandardTitle => 'Стандартныя правілы шахмат (ФІДЭ)';
+
+  @override
+  String get variantChess960Title => 'Стартавая пазіцыя фігур выпадковая.';
+
+  @override
+  String get variantKingOfTheHillTitle => 'Для перамогі трэба прывесці караля ў цэнтр.';
+
+  @override
+  String get variantThreeCheckTitle => 'Для перамогі трэба даць шах тройчы.';
+
+  @override
+  String get variantAntichessTitle => 'Для перамогі трэба прайграць усе фігуры ці атрымаць пат.';
+
+  @override
+  String get variantAtomicTitle => 'Для перамогі трэба ўзарваць караля суперніка.';
+
+  @override
+  String get variantHordeTitle => 'Адзін бок мае шмат пешак, у іншага звычайны набор фігур.';
+
+  @override
+  String get variantRacingKingsTitle => 'Для перамогі трэба давесці свайго караля да канца дошкі першым';
+
+  @override
+  String get variantCrazyhouseTitle => 'Збітыя фігуры можна вярнуць на дошку замест хода.';
+
+  @override
+  String get variantFromPositionTitle => 'Звычайныя шахматы з сваёй пазіцыяй';
 
   @override
   String get activityActivity => 'Актыўнасць';
@@ -753,13 +789,13 @@ class AppLocalizationsBe extends AppLocalizations {
   String get broadcastLiveBroadcasts => 'Прамыя трансляцыі турніраў';
 
   @override
-  String get broadcastBroadcastCalendar => 'Broadcast calendar';
+  String get broadcastBroadcastCalendar => 'Каляндар трансляцый';
 
   @override
   String get broadcastNewBroadcast => 'Новая прамая трансляцыя';
 
   @override
-  String get broadcastSubscribedBroadcasts => 'Subscribed broadcasts';
+  String get broadcastSubscribedBroadcasts => 'Выбраныя трансляцыі';
 
   @override
   String get broadcastAboutBroadcasts => 'Пра трансляцыіі';
@@ -768,7 +804,7 @@ class AppLocalizationsBe extends AppLocalizations {
   String get broadcastHowToUseLichessBroadcasts => 'Як карыстацца трансляцыямі Lichess.';
 
   @override
-  String get broadcastTheNewRoundHelp => 'The new round will have the same members and contributors as the previous one.';
+  String get broadcastTheNewRoundHelp => 'У новым туры будуць тыя ж удзельнікі і рэдактары, што і ў папярэдняму.';
 
   @override
   String get broadcastAddRound => 'Дадаць тур';
@@ -797,17 +833,17 @@ class AppLocalizationsBe extends AppLocalizations {
   }
 
   @override
-  String get broadcastSourceSingleUrl => 'PGN Source URL';
+  String get broadcastSourceSingleUrl => 'Спасылка ў фармаце PGN';
 
   @override
   String get broadcastSourceUrlHelp => 'Спасылка, з якой Lichess паспрабуе атрымоўваць абнаўленні PGN. Яны павінна быць даступнай для кожнай ва Інтэрнэце.';
 
   @override
-  String get broadcastSourceGameIds => 'Up to 64 Lichess game IDs, separated by spaces.';
+  String get broadcastSourceGameIds => 'Да 64 ігравых ID Lichess, раздзеленых прабеламі.';
 
   @override
   String broadcastStartDateTimeZone(String param) {
-    return 'Start date in the tournament local timezone: $param';
+    return 'Дата пачатку ў мясцовым часавым поясе: $param';
   }
 
   @override
@@ -841,22 +877,22 @@ class AppLocalizationsBe extends AppLocalizations {
   String get broadcastDefinitivelyDeleteTournament => 'Канчаткова выдаліць увесь турнір, усе яго туры і ўсе гульні.';
 
   @override
-  String get broadcastShowScores => 'Show players scores based on game results';
+  String get broadcastShowScores => 'Паказваць ачкі гульцоў па рэзультатах гульняў';
 
   @override
-  String get broadcastReplacePlayerTags => 'Optional: replace player names, ratings and titles';
+  String get broadcastReplacePlayerTags => 'Па жаданні: змяніць імёны, рэйтынгі і званні гульцоў';
 
   @override
-  String get broadcastFideFederations => 'FIDE federations';
+  String get broadcastFideFederations => 'Федэрацыі FIDE';
 
   @override
-  String get broadcastTop10Rating => 'Top 10 rating';
+  String get broadcastTop10Rating => 'Топ-10 рэйтынгу';
 
   @override
   String get broadcastFidePlayers => 'Гульцы FIDE';
 
   @override
-  String get broadcastFidePlayerNotFound => 'FIDE player not found';
+  String get broadcastFidePlayerNotFound => 'Гулец FIDE не знойдзены';
 
   @override
   String get broadcastFideProfile => 'Профіль FIDE';
@@ -865,79 +901,82 @@ class AppLocalizationsBe extends AppLocalizations {
   String get broadcastFederation => 'Федэрацыя';
 
   @override
-  String get broadcastAge => 'Age';
+  String get broadcastAge => 'Узрост';
 
   @override
-  String get broadcastUnrated => 'Unrated';
+  String get broadcastUnrated => 'Без рейтынгу';
 
   @override
-  String get broadcastRecentTournaments => 'Recent tournaments';
+  String get broadcastRecentTournaments => 'Нядаўнія турніры';
 
   @override
-  String get broadcastOpenLichess => 'Open in Lichess';
+  String get broadcastOpenLichess => 'Адкрыць у Lichess';
 
   @override
-  String get broadcastTeams => 'Teams';
+  String get broadcastTeams => 'Каманды';
 
   @override
-  String get broadcastBoards => 'Boards';
+  String get broadcastBoards => 'Дошкі';
 
   @override
-  String get broadcastOverview => 'Overview';
+  String get broadcastOverview => 'Агляд';
 
   @override
-  String get broadcastSubscribeTitle => 'Subscribe to be notified when each round starts. You can toggle bell or push notifications for broadcasts in your account preferences.';
+  String get broadcastSubscribeTitle => 'Падпішыцеся, каб атрымліваць паведамленні аб пачатку кожнага раунда. Вы можаце ўключыць гукавыя ці пуш-паведамленні ў сваіх наладах.';
 
   @override
-  String get broadcastUploadImage => 'Upload tournament image';
+  String get broadcastUploadImage => 'Загрузіць відарыс турніру';
 
   @override
-  String get broadcastNoBoardsYet => 'No boards yet. These will appear once games are uploaded.';
+  String get broadcastNoBoardsYet => 'Дошак пакуль няма. Яна з\'явяцца пасля загрузкі гульняў.';
 
   @override
   String broadcastBoardsCanBeLoaded(String param) {
-    return 'Boards can be loaded with a source or via the $param';
+    return 'Дошкі можна загрузіць з крыніцы або праз $param';
   }
 
   @override
   String broadcastStartsAfter(String param) {
-    return 'Starts after $param';
+    return 'Пачнецца пасля $param';
   }
 
   @override
-  String get broadcastStartVerySoon => 'The broadcast will start very soon.';
+  String get broadcastStartVerySoon => 'Трансляцыя пачнецца вельмі хутка.';
 
   @override
-  String get broadcastNotYetStarted => 'The broadcast has not yet started.';
+  String get broadcastNotYetStarted => 'Трансляцыя яшчэ не пачалася.';
 
   @override
-  String get broadcastOfficialWebsite => 'Official website';
+  String get broadcastOfficialWebsite => 'Афіцыйны сайт';
 
   @override
-  String get broadcastOfficialStandings => 'Official Standings';
+  String get broadcastOfficialStandings => 'Афіцыяльная турнірная табліца';
 
   @override
   String broadcastIframeHelp(String param) {
-    return 'More options on the $param';
+    return 'Больш опцый на $param';
   }
 
   @override
-  String get broadcastWebmastersPage => 'webmasters page';
+  String get broadcastWebmastersPage => 'старонцы вэб-майстра';
 
   @override
-  String get broadcastEmbedThisBroadcast => 'Embed this broadcast in your website';
+  String get broadcastEmbedThisBroadcast => 'Убудуйце гэтую трансляцыю на сваім сайце';
 
   @override
-  String get broadcastRatingDiff => 'Rating diff';
+  String get broadcastRatingDiff => 'Розніца ў рэйтынгу';
 
   @override
-  String get broadcastGamesThisTournament => 'Games in this tournament';
+  String get broadcastGamesThisTournament => 'Гульні ў гэтым турніры';
 
   @override
-  String get broadcastScore => 'Score';
+  String get broadcastScore => 'Ачкі';
 
   @override
-  String get broadcastAllTeams => 'All teams';
+  String get broadcastStandingsDisclaimer => 'Standings are calculated using broadcasted games and may differ from official results.';
+
+  @override
+  String get broadcastAllTeams => 'Усе каманды';
 
   @override
   String get broadcastTournamentFormat => 'Tournament format';
@@ -981,12 +1020,82 @@ class AppLocalizationsBe extends AppLocalizations {
   }
 
   @override
+  String get broadcastMatchPoints => 'Match Points';
+
+  @override
+  String get broadcastGamePoints => 'Game Points';
+
+  @override
+  String get broadcastMatches => 'Matches';
+
+  @override
+  String get broadcastMatchHistory => 'Match History';
+
+  @override
+  String get broadcastTeamResults => 'Team Results';
+
+  @override
+  String broadcastTermsAutomaticallyTranslated(String param) {
+    return 'The following term(s) will be automatically translated: $param.';
+  }
+
+  @override
   String broadcastRoundX(String param) {
     return 'Round $param';
   }
 
   @override
   String get broadcastDefaultRoundNameHelp => 'Keeping the default name will automatically translate it to all other languages.';
+
+  @override
+  String get broadcastOpenTournament => 'Open';
+
+  @override
+  String get broadcastWomenTournament => 'Women';
+
+  @override
+  String get broadcastMenTournament => 'Men';
+
+  @override
+  String get broadcastGirlsTournament => 'Girls';
+
+  @override
+  String get broadcastBoysTournament => 'Boys';
+
+  @override
+  String broadcastOpenUnderXAgeTournament(String param) {
+    return 'Open U$param';
+  }
+
+  @override
+  String broadcastGirlsUnderXAgeTournament(String param) {
+    return 'Girls U$param';
+  }
+
+  @override
+  String broadcastBoysUnderXAgeTournament(String param) {
+    return 'Boys U$param';
+  }
+
+  @override
+  String get broadcastQuarterfinals => 'Quarterfinals';
+
+  @override
+  String get broadcastSemifinals => 'Semifinals';
+
+  @override
+  String get broadcastFinals => 'Finals';
+
+  @override
+  String get broadcastTiebreaks => 'Tiebreaks';
+
+  @override
+  String broadcastGameX(String param) {
+    return 'Game $param';
+  }
+
+  @override
+  String get broadcastKnockouts => 'Knockouts';
 
   @override
   String broadcastNbBroadcasts(int count) {
@@ -1141,7 +1250,7 @@ class AppLocalizationsBe extends AppLocalizations {
   String get coordinatesShowCoordinates => 'Паказваць каардынаты';
 
   @override
-  String get coordinatesShowCoordsOnAllSquares => 'Coordinates on every square';
+  String get coordinatesShowCoordsOnAllSquares => 'Паказваць каардынаты на кожнай клетцы';
 
   @override
   String get coordinatesShowPieces => 'Паказваць фігуры';
@@ -1156,7 +1265,7 @@ class AppLocalizationsBe extends AppLocalizations {
   String get coordinatesNameSquare => 'Назавіце клетку';
 
   @override
-  String get coordinatesPracticeOnlySomeFilesAndRanks => 'Practice only some files & ranks';
+  String get coordinatesPracticeOnlySomeFilesAndRanks => 'Трэніравацца толькі з некаторымі слупкамі і радкамі';
 
   @override
   String get patronDonate => 'Ахвяраваць';
@@ -1862,6 +1971,12 @@ class AppLocalizationsBe extends AppLocalizations {
   String get puzzleThemeCapturingDefenderDescription => 'Адцягненне або ўзяцце фігуры, якая з\'яўляца крытычнай для абароны іншай фігуры, што дазваляе ўзяце неабароненую фігуру наступным ходам.';
 
   @override
+  String get puzzleThemeCollinearMove => 'Collinear move';
+
+  @override
+  String get puzzleThemeCollinearMoveDescription => 'Two opposing pieces face each other, and one slides along the line of attack without capturing the enemy piece.';
+
+  @override
   String get puzzleThemeCornerMate => 'Corner mate';
 
   @override
@@ -1943,6 +2058,12 @@ class AppLocalizationsBe extends AppLocalizations {
   String get puzzleThemeEnPassantDescription => 'Задача звязаная з \"узяццем на праходзе\", дзе пешка можа ўзяць пешку суперніка, якая прайшла побач, выкарыстоўвыючы першы ход на два палі.';
 
   @override
+  String get puzzleThemeEpauletteMate => 'Epaulette mate';
+
+  @override
+  String get puzzleThemeEpauletteMateDescription => 'Two adjacent escape squares for a checked king are occupied by other pieces.';
+
+  @override
   String get puzzleThemeExposedKing => 'Адкрыты кароль';
 
   @override
@@ -1995,6 +2116,12 @@ class AppLocalizationsBe extends AppLocalizations {
 
   @override
   String get puzzleThemeMorphysMateDescription => 'Use the bishop to check the king, while your rook helps to confine it.';
+
+  @override
+  String get puzzleThemeSwallowstailMate => 'Swallow\'s tail mate';
+
+  @override
+  String get puzzleThemeSwallowstailMateDescription => 'A checkmate pattern that visually resembles the appearance of a swallow’s tail, similar to a V shape.';
 
   @override
   String get puzzleThemeTriangleMate => 'Triangle mate';
@@ -2267,6 +2394,12 @@ class AppLocalizationsBe extends AppLocalizations {
 
   @override
   String get orLetYourOpponentScanQrCode => 'Або дазвольце апаненту адсканаваць гэты QR-код';
+
+  @override
+  String get reusableChallengeUrl => 'Reusable challenge URL';
+
+  @override
+  String get permanentLinkForAnyoneToChallengeYou => 'A permanent link for anyone to challenge you with these exact settings.';
 
   @override
   String get waiting => 'Чакаем';
@@ -2618,10 +2751,31 @@ class AppLocalizationsBe extends AppLocalizations {
   String get multipleLines => 'Дадатковыя хады';
 
   @override
+  String get multipleLinesDescription => 'Set number of evaluation lines and move arrows on the board';
+
+  @override
+  String get searchTime => 'Search time';
+
+  @override
+  String get searchTimeDescription => 'Set time to evaluate fresh positions';
+
+  @override
+  String get threads => 'Threads';
+
+  @override
+  String get threadsDescription => 'Set this below your CPU\'s thread count, the ticks mark a good safe choice';
+
+  @override
+  String get threadsDescriptionMobile => 'More threads will use more battery for better analysis';
+
+  @override
   String get cpus => 'Працэсары';
 
   @override
   String get memory => 'Памяць';
+
+  @override
+  String get memoryDescription => 'Higher values may improve performance';
 
   @override
   String get infiniteAnalysis => 'Бясконцы аналіз';
@@ -2781,7 +2935,7 @@ class AppLocalizationsBe extends AppLocalizations {
   String get signupUsernameHint => 'Пераканайцеся, што выбралі імя карыстальніка, зручнае для сям\'і. Вы не можаце змяніць яго пазней, і любыя ўліковыя запісы з неадпаведнымі імёнамі карыстальнікаў будуць зачынены!';
 
   @override
-  String get signupEmailHint => 'Мы будзем выкарыстоўваць яго толькі для скіду пароля.';
+  String get signupEmailPromise => 'We will only send you emails about your account and never share your email.';
 
   @override
   String get password => 'Пароль';
@@ -3209,6 +3363,12 @@ class AppLocalizationsBe extends AppLocalizations {
 
   @override
   String get gameAsGIF => 'Партыя ў фармаце GIF';
+
+  @override
+  String get playerNames => 'Player names';
+
+  @override
+  String get moveAnnotations => 'Move annotations';
 
   @override
   String get pasteTheFenStringHere => 'Устаўце сюды радок у фармаце FEN';
@@ -3659,6 +3819,15 @@ class AppLocalizationsBe extends AppLocalizations {
   String get invalidAuthenticationCode => 'Няправільны код пацверджання';
 
   @override
+  String get clearField => 'Clear field';
+
+  @override
+  String get orSeparator => 'Or';
+
+  @override
+  String get logInByEmail => 'Log in by email';
+
+  @override
   String get emailMeALink => 'Дашліце мне спасылку па электроннай пошце';
 
   @override
@@ -4029,21 +4198,6 @@ class AppLocalizationsBe extends AppLocalizations {
   String get keyEnterOrExitVariation => 'увайсці/выйсці з варыянту';
 
   @override
-  String get keyRequestComputerAnalysis => 'Request computer analysis, Learn from your mistakes';
-
-  @override
-  String get keyNextLearnFromYourMistakes => 'Далей (Работа над памылкамі)';
-
-  @override
-  String get keyNextBlunder => 'Наступны зявок';
-
-  @override
-  String get keyNextMistake => 'Наступная памылка';
-
-  @override
-  String get keyNextInaccuracy => 'Наступная недакладнасць';
-
-  @override
   String get keyPreviousBranch => 'Папярэдні варыянт';
 
   @override
@@ -4324,6 +4478,9 @@ class AppLocalizationsBe extends AppLocalizations {
 
   @override
   String get brightness => 'Яркасць';
+
+  @override
+  String get contrast => 'Contrast';
 
   @override
   String get hue => 'Адценне';
@@ -4953,6 +5110,11 @@ class AppLocalizationsBe extends AppLocalizations {
 
   @override
   String get clearSearch => 'Ачысціць пошук';
+
+  @override
+  String thereAreNoResultsForX(String param) {
+    return 'No results for \"$param\"';
+  }
 
   @override
   String get tags => 'Тэгі';

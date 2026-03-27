@@ -19,7 +19,6 @@ import 'package:lichess_mobile/src/model/common/socket.dart';
 import 'package:lichess_mobile/src/model/common/uci.dart';
 import 'package:lichess_mobile/src/model/engine/evaluation_mixin.dart';
 import 'package:lichess_mobile/src/model/engine/evaluation_preferences.dart';
-import 'package:lichess_mobile/src/model/engine/evaluation_service.dart';
 import 'package:lichess_mobile/src/model/study/study.dart';
 import 'package:lichess_mobile/src/model/study/study_repository.dart';
 import 'package:lichess_mobile/src/network/socket.dart';
@@ -230,12 +229,13 @@ class StudyController extends AsyncNotifier<StudyState>
     }
   }
 
-  void onUserMove(NormalMove move) {
+  void onUserMove(Move move) {
     if (!state.hasValue || state.requireValue.currentPosition == null) return;
 
     if (!state.requireValue.currentPosition!.isLegal(move)) return;
 
-    if (isPromotionPawnMove(state.requireValue.currentPosition!, move)) {
+    if (move case NormalMove()
+        when isPromotionPawnMove(state.requireValue.currentPosition!, move)) {
       state = AsyncValue.data(state.requireValue.copyWith(promotionMove: move));
       return;
     }
@@ -278,7 +278,7 @@ class StudyController extends AsyncNotifier<StudyState>
   }
 
   void showGamebookSolution() {
-    onUserMove(state.requireValue.currentNode.children.first as NormalMove);
+    onUserMove(state.requireValue.currentNode.children.first);
   }
 
   void userPrevious() {
@@ -387,24 +387,27 @@ class StudyController extends AsyncNotifier<StudyState>
     _setPath(path.penultimate, shouldRecomputeRootView: true);
   }
 
-  Future<void> toggleEngineThreatMode() async {
-    if (state.hasValue) {
-      state = AsyncData(
-        state.requireValue.copyWith(engineInThreatMode: !state.requireValue.engineInThreatMode),
-      );
-      requestEval();
-    }
-  }
-
-  void _sendMoveToSocket(NormalMove move) {
+  void _sendMoveToSocket(Move move) {
     if (state.requireValue.isWriteable == false) return;
 
-    _recordChange('anaMove', {
-      'orig': move.from.name,
-      'dest': move.to.name,
-      'fen': state.requireValue.currentPosition!.fen,
-      'path': state.requireValue.currentPath.value,
-    });
+    switch (move) {
+      case NormalMove():
+        _recordChange('anaMove', {
+          'orig': move.from.name,
+          'dest': move.to.name,
+          'variant': state.requireValue.variant.name,
+          'fen': state.requireValue.currentPosition!.fen,
+          'path': state.requireValue.currentPath.value,
+        });
+      case DropMove():
+        _recordChange('anaDrop', {
+          'role': move.role.name,
+          'pos': move.to.name,
+          'variant': state.requireValue.variant.name,
+          'fen': state.requireValue.currentPosition!.fen,
+          'path': state.requireValue.currentPath.value,
+        });
+    }
   }
 
   void _recordChange(String socketEvent, Map<String, dynamic> data) {
@@ -446,7 +449,7 @@ class StudyController extends AsyncNotifier<StudyState>
       if (!isNavigating && isForward) {
         final isCheck = currentNode.sanMove.isCheck;
         if (currentNode.sanMove.isCapture) {
-          ref.read(moveFeedbackServiceProvider).captureFeedback(check: isCheck);
+          ref.read(moveFeedbackServiceProvider).captureFeedback(state.variant, check: isCheck);
         } else {
           ref.read(moveFeedbackServiceProvider).moveFeedback(check: isCheck);
         }
@@ -494,8 +497,17 @@ class StudyController extends AsyncNotifier<StudyState>
 enum GamebookState { startLesson, findTheMove, correctMove, incorrectMove, lessonComplete }
 
 @freezed
-sealed class StudyState with _$StudyState implements EvaluationMixinState, CommonAnalysisState {
+sealed class StudyState
+    with _$StudyState, AnalysisExplosionMixin, EvaluationMixinState<StudyState>
+    implements CommonAnalysisState {
   const StudyState._();
+
+  @override
+  ViewRoot? get analysisRoot => root;
+
+  @override
+  StudyState withThreatMode(bool engineInThreatMode) =>
+      copyWith(engineInThreatMode: engineInThreatMode);
 
   const factory StudyState({
     UserId? myId,
@@ -564,7 +576,7 @@ sealed class StudyState with _$StudyState implements EvaluationMixinState, Commo
   /// Whether the engine is available for evaluation
   @override
   bool isEngineAvailable(EngineEvaluationPrefState prefs) =>
-      isComputerAnalysisAllowed && engineSupportedVariants.contains(variant) && prefs.isEnabled;
+      isComputerAnalysisAllowed && prefs.isEnabled;
 
   bool get isOpeningExplorerAvailable => !gamebookActive && study.chapter.features.explorer;
 
@@ -575,6 +587,7 @@ sealed class StudyState with _$StudyState implements EvaluationMixinState, Commo
           position: currentPosition!,
           savedEval: currentNode.eval,
           serverEval: null,
+          filters: (id: evaluationContext.id, path: currentPath),
         )
       : null;
 

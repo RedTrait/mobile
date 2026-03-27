@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
@@ -7,12 +8,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:l10n_esperanto/l10n_esperanto.dart';
 import 'package:lichess_mobile/l10n/l10n.dart';
 import 'package:lichess_mobile/src/app_links.dart';
-import 'package:lichess_mobile/src/log.dart';
 import 'package:lichess_mobile/src/model/account/account_service.dart';
 import 'package:lichess_mobile/src/model/account/ongoing_game.dart';
+import 'package:lichess_mobile/src/model/announce/announce_service.dart';
+import 'package:lichess_mobile/src/model/auth/auth_repository.dart';
+import 'package:lichess_mobile/src/model/auth/oauth_callback.dart';
 import 'package:lichess_mobile/src/model/challenge/challenge_service.dart';
 import 'package:lichess_mobile/src/model/common/preloaded_data.dart';
 import 'package:lichess_mobile/src/model/correspondence/correspondence_service.dart';
+import 'package:lichess_mobile/src/model/log/app_log_service.dart';
 import 'package:lichess_mobile/src/model/message/message_service.dart';
 import 'package:lichess_mobile/src/model/notifications/notification_service.dart';
 import 'package:lichess_mobile/src/model/settings/board_preferences.dart';
@@ -23,6 +27,8 @@ import 'package:lichess_mobile/src/quick_actions.dart';
 import 'package:lichess_mobile/src/tab_scaffold.dart';
 import 'package:lichess_mobile/src/theme.dart';
 import 'package:lichess_mobile/src/utils/screen.dart';
+import 'package:lichess_mobile/src/view/more/import_pgn_screen.dart';
+import 'package:receive_sharing_intent/receive_sharing_intent.dart';
 
 /// Application initialization and main entry point.
 class AppInitializationScreen extends ConsumerWidget {
@@ -65,7 +71,9 @@ class _AppState extends ConsumerState<Application> {
   bool _firstTimeOnlineCheck = false;
   final _appLinks = AppLinks();
   final _navigatorKey = GlobalKey<NavigatorState>();
+
   StreamSubscription<Uri>? _linkSubscription;
+  StreamSubscription<List<SharedMediaFile>>? _intentSub;
 
   @override
   void initState() {
@@ -77,6 +85,7 @@ class _AppState extends ConsumerState<Application> {
     ref.read(accountServiceProvider).start();
     ref.read(correspondenceServiceProvider).start();
     ref.read(quickActionServiceProvider).start();
+    ref.read(announceServiceProvider).start();
 
     // Listen for connectivity changes and perform actions accordingly.
     ref.listenManual(connectivityChangesProvider, (prev, current) async {
@@ -109,11 +118,13 @@ class _AppState extends ConsumerState<Application> {
 
     super.initState();
     _initAppLinks();
+    _initSharingIntent();
   }
 
   @override
   void dispose() {
     _linkSubscription?.cancel();
+    _intentSub?.cancel();
     super.dispose();
   }
 
@@ -149,10 +160,51 @@ class _AppState extends ConsumerState<Application> {
 
   Future<void> _initAppLinks() async {
     _linkSubscription = _appLinks.uriLinkStream.listen((uri) {
+      // File links are handled by the sharing intent logic, so we can ignore them here.
+      if (uri.scheme == 'file' || uri.scheme == 'content') {
+        return;
+      }
+      if (uri.scheme == kOAuthRedirectUriScheme && uri.host == kOAuthRedirectUriHost) {
+        ref.read(oauthCallbackProvider).add(uri);
+        return;
+      }
       final context = _navigatorKey.currentContext;
       if (context != null && context.mounted) {
         handleAppLink(context, uri);
       }
     });
+  }
+
+  void _initSharingIntent() {
+    // Warm start
+    _intentSub = ReceiveSharingIntent.instance.getMediaStream().listen((
+      List<SharedMediaFile> value,
+    ) {
+      _processSharedFiles(value);
+    });
+
+    // Cold start
+    ReceiveSharingIntent.instance.getInitialMedia().then((List<SharedMediaFile> value) {
+      _processSharedFiles(value);
+      ReceiveSharingIntent.instance.reset();
+    });
+  }
+
+  Future<void> _processSharedFiles(List<SharedMediaFile> files) async {
+    if (files.isEmpty) return;
+    final filePath = files.first.path;
+    try {
+      final context = _navigatorKey.currentContext;
+      if (context == null || !context.mounted) return;
+
+      final file = File(filePath);
+      final pgnText = await file.readAsString();
+
+      if (context.mounted) {
+        ImportPgnScreen.handlePgnText(context, pgnText);
+      }
+    } catch (e) {
+      debugPrint('Failed to process incoming file: $e');
+    }
   }
 }

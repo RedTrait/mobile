@@ -81,6 +81,7 @@ Future<void> initializeLocalNotifications(Locale locale) async {
         notificationCategories: <DarwinNotificationCategory>[
           ChallengeNotification.darwinPlayableVariantCategory(l10n),
           ChallengeNotification.darwinUnplayableVariantCategory(l10n),
+          AnnounceNotification.darwinCategory(l10n),
         ],
       ),
       linux: const LinuxInitializationSettings(defaultActionName: 'Action'),
@@ -114,6 +115,8 @@ Future<void> androidDisplayInitialization(WidgetsBinding widgetsBinding) async {
     Future.wait([DynamicColorPlugin.getCorePalette(), DynamicColorPlugin.getColorSchemes()]).then((
       List<dynamic> value,
     ) {
+      // TODO migrate
+      // ignore: deprecated_member_use
       final CorePalette? palette = value[0] as CorePalette?;
       final schemes = value[1] as dynamic;
       final ColorSchemes? colorSchemes = schemes != null

@@ -4,6 +4,24 @@ import 'package:dartchess/dartchess.dart';
 import 'package:flutter/foundation.dart';
 import 'package:multistockfish/multistockfish.dart';
 
+String _engineName(StockfishFlavor flavor) => switch (flavor) {
+  StockfishFlavor.sf16 => 'Stockfish 16',
+  StockfishFlavor.latestNoNNUE => 'Stockfish 18',
+  StockfishFlavor.variant => 'Fairy-Stockfish',
+};
+
+Rule ruleFromUciVariant(String uciVariant) => switch (uciVariant) {
+  'chess' => Rule.chess,
+  'antichess' => Rule.antichess,
+  'kingofthehill' => Rule.kingofthehill,
+  '3check' => Rule.threecheck,
+  'atomic' => Rule.atomic,
+  'horde' => Rule.horde,
+  'racingkings' => Rule.racingKings,
+  'crazyhouse' => Rule.crazyhouse,
+  _ => throw ArgumentError('Unexpected uci variant: $uciVariant'),
+};
+
 /// A fake implementation of [Stockfish] for testing.
 class FakeStockfish implements Stockfish {
   FakeStockfish();
@@ -49,6 +67,11 @@ class FakeStockfish implements Stockfish {
     _state.value = StockfishState.starting;
     await Future.microtask(() {});
     _state.value = StockfishState.ready;
+
+    // In the real world, multistockfish sends "uci" to the engine, triggering it to respond with "uciok" and its name.
+    // So here, we simulate that by emitting these lines immediately.
+    _emit('id name ${_engineName(flavor)}\n');
+    _emit('uciok\n');
   }
 
   @override
@@ -61,12 +84,6 @@ class FakeStockfish implements Stockfish {
   set stdin(String line) {
     final parts = line.trim().split(RegExp(r'\s+'));
     switch (parts.first) {
-      case 'uci':
-        final engineName = (_flavor == StockfishFlavor.latestNoNNUE
-            ? 'Stockfish 17'
-            : 'Stockfish 16');
-        _emit('id name $engineName\n');
-        _emit('uciok\n');
       case 'isready':
         _emit('readyok\n');
       case 'position':
@@ -74,7 +91,7 @@ class FakeStockfish implements Stockfish {
           final movesPartIndex = parts.indexWhere((p) => p == 'moves');
           if (parts.length > 2) {
             _position = Position.setupPosition(
-              Rule.chess,
+              _variant != null ? ruleFromUciVariant(_variant!) : Rule.chess,
               Setup.parseFen(
                 parts.sublist(2, movesPartIndex != -1 ? movesPartIndex : null).join(' '),
               ),
@@ -108,6 +125,82 @@ class FakeStockfish implements Stockfish {
             }
           }
         }
+    }
+  }
+
+  @override
+  ValueListenable<StockfishState> get state => _state;
+
+  @override
+  Stream<String> get stdout => _stdoutController.stream;
+}
+
+/// A fake Stockfish for crazyhouse that emits a drop move in its principal variation.
+/// Used to test that engine lines correctly handle drop moves.
+class FakeCrazyhouseDropMoveStockfish implements Stockfish {
+  FakeCrazyhouseDropMoveStockfish();
+
+  final _state = ValueNotifier<StockfishState>(StockfishState.initial);
+  final _stdoutController = StreamController<String>.broadcast();
+
+  StockfishFlavor _flavor = StockfishFlavor.variant;
+  String? _variant;
+
+  void _emitCrazyhouse(String line) {
+    if (!_stdoutController.isClosed) {
+      _stdoutController.add(line);
+    }
+  }
+
+  @override
+  StockfishFlavor get flavor => _flavor;
+
+  @override
+  String? get variant => _variant;
+
+  @override
+  String? get bigNetPath => null;
+
+  @override
+  String? get smallNetPath => null;
+
+  @override
+  Future<void> start({
+    StockfishFlavor flavor = StockfishFlavor.variant,
+    String? variant,
+    String? smallNetPath,
+    String? bigNetPath,
+  }) async {
+    _flavor = flavor;
+    _variant = variant;
+    _state.value = StockfishState.starting;
+    await Future.microtask(() {});
+    _state.value = StockfishState.ready;
+    _emitCrazyhouse('id name Fairy-Stockfish\n');
+    _emitCrazyhouse('uciok\n');
+  }
+
+  @override
+  Future<void> quit() async {
+    await Future.microtask(() {});
+    _state.value = StockfishState.initial;
+  }
+
+  @override
+  set stdin(String line) {
+    final parts = line.trim().split(RegExp(r'\s+'));
+    switch (parts.first) {
+      case 'isready':
+        _emitCrazyhouse('readyok\n');
+      case 'go':
+        // Emit two info lines with a drop move as the first PV move, then bestmove.
+        _emitCrazyhouse(
+          'info depth 15 seldepth 8 multipv 1 score cp 50 nodes 5000 nps 359000 hashfull 0 tbhits 0 time 1500 pv P@c4 d5c4 d2d4\n',
+        );
+        _emitCrazyhouse(
+          'info depth 16 seldepth 8 multipv 1 score cp 50 nodes 5359 nps 359000 hashfull 0 tbhits 0 time 1600 pv P@c4 d5c4 d2d4\n',
+        );
+        _emitCrazyhouse('bestmove P@c4 ponder d5c4\n');
     }
   }
 
@@ -179,6 +272,9 @@ class DelayedFakeStockfish implements Stockfish {
       await Future.microtask(() {});
     }
     _state.value = StockfishState.ready;
+
+    _emit('id name ${_customEngineName ?? _engineName(flavor)}\n');
+    _emit('uciok\n');
   }
 
   @override
@@ -197,12 +293,6 @@ class DelayedFakeStockfish implements Stockfish {
     stdinCommands.add(line.trim());
     final parts = line.trim().split(RegExp(r'\s+'));
     switch (parts.first) {
-      case 'uci':
-        final engineName =
-            _customEngineName ??
-            (_flavor == StockfishFlavor.latestNoNNUE ? 'Stockfish 17' : 'Stockfish 16');
-        _emit('id name $engineName\n');
-        _emit('uciok\n');
       case 'isready':
         _emit('readyok\n');
       case 'position':
@@ -322,6 +412,9 @@ class ThrottleTestStockfish implements Stockfish {
     _state.value = StockfishState.starting;
     await Future.microtask(() {});
     _state.value = StockfishState.ready;
+
+    _emit('id name Stockfish 16\n');
+    _emit('uciok\n');
   }
 
   @override
@@ -335,9 +428,6 @@ class ThrottleTestStockfish implements Stockfish {
   set stdin(String line) {
     final parts = line.trim().split(RegExp(r'\s+'));
     switch (parts.first) {
-      case 'uci':
-        _emit('id name Stockfish 16\n');
-        _emit('uciok\n');
       case 'isready':
         _emit('readyok\n');
       case 'position':
@@ -464,6 +554,9 @@ class AnalysisTestStockfish implements Stockfish {
     _state.value = StockfishState.starting;
     await Future.microtask(() {});
     _state.value = StockfishState.ready;
+
+    _emit('id name Stockfish 16\n');
+    _emit('uciok\n');
   }
 
   @override
@@ -477,9 +570,6 @@ class AnalysisTestStockfish implements Stockfish {
   set stdin(String line) {
     final parts = line.trim().split(RegExp(r'\s+'));
     switch (parts.first) {
-      case 'uci':
-        _emit('id name Stockfish 16\n');
-        _emit('uciok\n');
       case 'isready':
         _emit('readyok\n');
       case 'position':
@@ -543,6 +633,7 @@ class LegalMoveFakeStockfish implements Stockfish {
 
   StockfishFlavor _flavor = StockfishFlavor.sf16;
   Position? _position;
+  String? _variant;
 
   void _emit(String line) {
     if (!_stdoutController.isClosed) {
@@ -554,7 +645,7 @@ class LegalMoveFakeStockfish implements Stockfish {
   StockfishFlavor get flavor => _flavor;
 
   @override
-  String? get variant => null;
+  String? get variant => _variant;
 
   @override
   String? get bigNetPath => null;
@@ -570,9 +661,13 @@ class LegalMoveFakeStockfish implements Stockfish {
     String? bigNetPath,
   }) async {
     _flavor = flavor;
+    _variant = variant;
     _state.value = StockfishState.starting;
     await Future.microtask(() {});
     _state.value = StockfishState.ready;
+
+    _emit('id name ${_engineName(flavor)}\n');
+    _emit('uciok\n');
   }
 
   @override
@@ -585,12 +680,6 @@ class LegalMoveFakeStockfish implements Stockfish {
   set stdin(String line) {
     final parts = line.trim().split(RegExp(r'\s+'));
     switch (parts.first) {
-      case 'uci':
-        final engineName = _flavor == StockfishFlavor.latestNoNNUE
-            ? 'Stockfish 17'
-            : 'Stockfish 16';
-        _emit('id name $engineName\n');
-        _emit('uciok\n');
       case 'isready':
         _emit('readyok\n');
       case 'position':
@@ -598,7 +687,7 @@ class LegalMoveFakeStockfish implements Stockfish {
           final movesPartIndex = parts.indexWhere((p) => p == 'moves');
           if (parts.length > 2) {
             _position = Position.setupPosition(
-              Rule.chess,
+              _variant != null ? ruleFromUciVariant(_variant!) : Rule.chess,
               Setup.parseFen(
                 parts.sublist(2, movesPartIndex != -1 ? movesPartIndex : null).join(' '),
               ),
@@ -691,6 +780,9 @@ class MultiPvFakeStockfish implements Stockfish {
     _state.value = StockfishState.starting;
     await Future.microtask(() {});
     _state.value = StockfishState.ready;
+
+    _emit('id name ${_engineName(flavor)}\n');
+    _emit('uciok\n');
   }
 
   @override
@@ -703,12 +795,6 @@ class MultiPvFakeStockfish implements Stockfish {
   set stdin(String line) {
     final parts = line.trim().split(RegExp(r'\s+'));
     switch (parts.first) {
-      case 'uci':
-        final engineName = _flavor == StockfishFlavor.latestNoNNUE
-            ? 'Stockfish 17'
-            : 'Stockfish 16';
-        _emit('id name $engineName\n');
-        _emit('uciok\n');
       case 'isready':
         _emit('readyok\n');
       case 'position':
@@ -817,6 +903,159 @@ class ErrorStockfish implements Stockfish {
   @override
   set stdin(String line) {
     // Do nothing - engine is in error state
+  }
+
+  @override
+  ValueListenable<StockfishState> get state => _state;
+
+  @override
+  Stream<String> get stdout => _stdoutController.stream;
+}
+
+/// A fake Stockfish for testing practice mode with configurable eval shifts.
+///
+/// This stockfish emits multiPv evaluations and can be configured to simulate
+/// different move quality scenarios (good move, inaccuracy, mistake, blunder).
+class PracticeModeStockfish implements Stockfish {
+  PracticeModeStockfish({this.initialEvalCp = 30, this.evalShiftCp = 0});
+
+  /// The initial evaluation in centipawns (before the player's move).
+  final int initialEvalCp;
+
+  /// The shift in evaluation after the player's move (negative = position got worse).
+  /// For example, -100 would mean the position dropped by 1 pawn.
+  final int evalShiftCp;
+
+  final _state = ValueNotifier<StockfishState>(StockfishState.initial);
+  final _stdoutController = StreamController<String>.broadcast();
+
+  StockfishFlavor _flavor = StockfishFlavor.sf16;
+  Position? _position;
+
+  /// Tracks if this is evaluating after a player move (to apply the shift).
+  int _goCount = 0;
+
+  void _emit(String line) {
+    if (!_stdoutController.isClosed) {
+      _stdoutController.add(line);
+    }
+  }
+
+  @override
+  StockfishFlavor get flavor => _flavor;
+
+  @override
+  String? get variant => null;
+
+  @override
+  String? get bigNetPath => null;
+
+  @override
+  String? get smallNetPath => null;
+
+  @override
+  Future<void> start({
+    StockfishFlavor flavor = StockfishFlavor.sf16,
+    String? variant,
+    String? smallNetPath,
+    String? bigNetPath,
+  }) async {
+    _flavor = flavor;
+    _state.value = StockfishState.starting;
+    await Future.microtask(() {});
+    _state.value = StockfishState.ready;
+
+    _emit('id name ${_engineName(flavor)}\n');
+    _emit('uciok\n');
+  }
+
+  @override
+  Future<void> quit() async {
+    await Future.microtask(() {});
+    _state.value = StockfishState.initial;
+    _goCount = 0;
+  }
+
+  @override
+  set stdin(String line) {
+    final parts = line.trim().split(RegExp(r'\s+'));
+    switch (parts.first) {
+      case 'isready':
+        _emit('readyok\n');
+      case 'position':
+        if (parts.length > 1 && parts[1] == 'fen') {
+          final movesPartIndex = parts.indexWhere((p) => p == 'moves');
+          if (parts.length > 2) {
+            _position = Position.setupPosition(
+              Rule.chess,
+              Setup.parseFen(
+                parts.sublist(2, movesPartIndex != -1 ? movesPartIndex : null).join(' '),
+              ),
+            );
+          }
+          if (movesPartIndex != -1) {
+            for (var i = movesPartIndex + 1; i < parts.length; i++) {
+              final move = Move.parse(parts[i]);
+              if (move != null) {
+                _position = _position!.play(move);
+              }
+            }
+          }
+        }
+      case 'go':
+        _goCount++;
+        if (_position != null) {
+          final legalMoves = makeLegalMoves(_position!);
+          if (legalMoves.isNotEmpty) {
+            // Get up to 4 different moves for multiPv
+            final moves = <NormalMove>[];
+            for (final entry in legalMoves.entries) {
+              if (moves.length >= 4) break;
+              moves.add(NormalMove(from: entry.key, to: entry.value.first));
+            }
+            _lastMoves = moves;
+
+            // Determine the base cp value
+            // First go call is for hints (before move), subsequent calls are for after move eval
+            final isAfterMoveEval = _goCount > 1;
+            final baseCp = isAfterMoveEval ? initialEvalCp + evalShiftCp : initialEvalCp;
+
+            // Emit multiPv info lines at high depth (16+) for practice mode
+            for (var depth = 16; depth <= 18; depth++) {
+              for (var i = 0; i < moves.length; i++) {
+                // Each subsequent PV is slightly worse
+                final cp = _position!.turn == Side.white ? baseCp - (i * 5) : -(baseCp - (i * 5));
+                _emit(
+                  'info depth $depth seldepth ${depth + 2} multipv ${i + 1} score cp $cp nodes 50000 nps 500000 hashfull 100 tbhits 0 time ${depth * 100} pv ${moves[i].uci}\n',
+                );
+              }
+            }
+
+            // Emit bestmove
+            _emitBestMove(moves);
+          }
+        }
+      case 'stop':
+        // When stopped, emit bestmove if we have moves
+        if (_lastMoves != null && _lastMoves!.isNotEmpty) {
+          _emitBestMove(_lastMoves!);
+        }
+    }
+  }
+
+  List<NormalMove>? _lastMoves;
+
+  void _emitBestMove(List<NormalMove> moves) {
+    final afterBestMove = _position!.play(moves.first);
+    final ponderMoves = makeLegalMoves(afterBestMove);
+    String ponderPart = '';
+    if (ponderMoves.isNotEmpty) {
+      final ponderFrom = ponderMoves.keys.first;
+      final ponderTo = ponderMoves[ponderFrom]!.first;
+      final ponderMove = NormalMove(from: ponderFrom, to: ponderTo);
+      ponderPart = ' ponder ${ponderMove.uci}';
+    }
+    _emit('bestmove ${moves.first.uci}$ponderPart\n');
   }
 
   @override

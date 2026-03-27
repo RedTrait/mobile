@@ -67,6 +67,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mobileMustBeLoggedIn => 'You must be logged in to view this page.';
 
   @override
+  String get mobileNewGame => 'New game';
+
+  @override
   String get mobileNoSearchResults => 'No results';
 
   @override
@@ -276,6 +279,39 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mobilePreviousPage => 'Previous';
+
+  @override
+  String get mobileOrImportPgnFile => 'Or import a PGN file';
+
+  @override
+  String get variantStandardTitle => 'Standard rules of chess (FIDE)';
+
+  @override
+  String get variantChess960Title => 'The starting position of the home rank pieces is randomised.';
+
+  @override
+  String get variantKingOfTheHillTitle => 'Bring your King to the center to win the game.';
+
+  @override
+  String get variantThreeCheckTitle => 'Check your opponent 3 times to win the game.';
+
+  @override
+  String get variantAntichessTitle => 'Lose all your pieces (or get stalemated) to win the game.';
+
+  @override
+  String get variantAtomicTitle => 'Nuke your opponent\'s king to win.';
+
+  @override
+  String get variantHordeTitle => 'One side has a large number of pawns, the other has a normal army.';
+
+  @override
+  String get variantRacingKingsTitle => 'Get your king to the other side of the board to win.';
+
+  @override
+  String get variantCrazyhouseTitle => 'Captured pieces can be dropped back on the board instead of moving a piece.';
+
+  @override
+  String get variantFromPositionTitle => 'Standard chess from a custom position';
 
   @override
   String get activityActivity => 'Activity';
@@ -897,6 +933,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get broadcastScore => 'Score';
 
   @override
+  String get broadcastStandingsDisclaimer => 'Standings are calculated using broadcasted games and may differ from official results.';
+
+  @override
   String get broadcastAllTeams => 'All teams';
 
   @override
@@ -941,12 +980,82 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get broadcastMatchPoints => 'Match Points';
+
+  @override
+  String get broadcastGamePoints => 'Game Points';
+
+  @override
+  String get broadcastMatches => 'Matches';
+
+  @override
+  String get broadcastMatchHistory => 'Match History';
+
+  @override
+  String get broadcastTeamResults => 'Team Results';
+
+  @override
+  String broadcastTermsAutomaticallyTranslated(String param) {
+    return 'The following term(s) will be automatically translated: $param.';
+  }
+
+  @override
   String broadcastRoundX(String param) {
     return 'Round $param';
   }
 
   @override
   String get broadcastDefaultRoundNameHelp => 'Keeping the default name will automatically translate it to all other languages.';
+
+  @override
+  String get broadcastOpenTournament => 'Open';
+
+  @override
+  String get broadcastWomenTournament => 'Women';
+
+  @override
+  String get broadcastMenTournament => 'Men';
+
+  @override
+  String get broadcastGirlsTournament => 'Girls';
+
+  @override
+  String get broadcastBoysTournament => 'Boys';
+
+  @override
+  String broadcastOpenUnderXAgeTournament(String param) {
+    return 'Open U$param';
+  }
+
+  @override
+  String broadcastGirlsUnderXAgeTournament(String param) {
+    return 'Girls U$param';
+  }
+
+  @override
+  String broadcastBoysUnderXAgeTournament(String param) {
+    return 'Boys U$param';
+  }
+
+  @override
+  String get broadcastQuarterfinals => 'Quarterfinals';
+
+  @override
+  String get broadcastSemifinals => 'Semifinals';
+
+  @override
+  String get broadcastFinals => 'Finals';
+
+  @override
+  String get broadcastTiebreaks => 'Tiebreaks';
+
+  @override
+  String broadcastGameX(String param) {
+    return 'Game $param';
+  }
+
+  @override
+  String get broadcastKnockouts => 'Knockouts';
 
   @override
   String broadcastNbBroadcasts(int count) {
@@ -1808,6 +1917,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get puzzleThemeCapturingDefenderDescription => 'Removing a piece that is critical to defence of another piece, allowing the now undefended piece to be captured on a following move.';
 
   @override
+  String get puzzleThemeCollinearMove => 'Collinear move';
+
+  @override
+  String get puzzleThemeCollinearMoveDescription => 'Two opposing pieces face each other, and one slides along the line of attack without capturing the enemy piece.';
+
+  @override
   String get puzzleThemeCornerMate => 'Corner mate';
 
   @override
@@ -1889,6 +2004,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get puzzleThemeEnPassantDescription => 'A tactic involving the en passant rule, where a pawn can capture an opponent pawn that has bypassed it using its initial two-square move.';
 
   @override
+  String get puzzleThemeEpauletteMate => 'Epaulette mate';
+
+  @override
+  String get puzzleThemeEpauletteMateDescription => 'Two adjacent escape squares for a checked king are occupied by other pieces.';
+
+  @override
   String get puzzleThemeExposedKing => 'Exposed king';
 
   @override
@@ -1941,6 +2062,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get puzzleThemeMorphysMateDescription => 'Use the bishop to check the king, while your rook helps to confine it.';
+
+  @override
+  String get puzzleThemeSwallowstailMate => 'Swallow\'s tail mate';
+
+  @override
+  String get puzzleThemeSwallowstailMateDescription => 'A checkmate pattern that visually resembles the appearance of a swallow’s tail, similar to a V shape.';
 
   @override
   String get puzzleThemeTriangleMate => 'Triangle mate';
@@ -2213,6 +2340,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get orLetYourOpponentScanQrCode => 'Or let your opponent scan this QR code';
+
+  @override
+  String get reusableChallengeUrl => 'Reusable challenge URL';
+
+  @override
+  String get permanentLinkForAnyoneToChallengeYou => 'A permanent link for anyone to challenge you with these exact settings.';
 
   @override
   String get waiting => 'Waiting';
@@ -2564,10 +2697,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get multipleLines => 'Multiple lines';
 
   @override
+  String get multipleLinesDescription => 'Set number of evaluation lines and move arrows on the board';
+
+  @override
+  String get searchTime => 'Search time';
+
+  @override
+  String get searchTimeDescription => 'Set time to evaluate fresh positions';
+
+  @override
+  String get threads => 'Threads';
+
+  @override
+  String get threadsDescription => 'Set this below your CPU\'s thread count, the ticks mark a good safe choice';
+
+  @override
+  String get threadsDescriptionMobile => 'More threads will use more battery for better analysis';
+
+  @override
   String get cpus => 'CPUs';
 
   @override
   String get memory => 'Memory';
+
+  @override
+  String get memoryDescription => 'Higher values may improve performance';
 
   @override
   String get infiniteAnalysis => 'Infinite analysis';
@@ -2727,7 +2881,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signupUsernameHint => 'Make sure to choose a username that\'s appropriate for all ages. You cannot change it later and any accounts with inappropriate usernames will get closed!';
 
   @override
-  String get signupEmailHint => 'We will only use it for password reset and account activation.';
+  String get signupEmailPromise => 'We will only send you emails about your account and never share your email.';
 
   @override
   String get password => 'Password';
@@ -3157,6 +3311,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get gameAsGIF => 'Game as GIF';
 
   @override
+  String get playerNames => 'Player names';
+
+  @override
+  String get moveAnnotations => 'Move annotations';
+
+  @override
   String get pasteTheFenStringHere => 'Paste the FEN text here';
 
   @override
@@ -3565,7 +3725,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reportProcessedFasterInEnglish => 'Your report will be processed faster if written in English.';
 
   @override
-  String get error_provideOneCheatedGameLink => 'Please provide at least one link to a game with suspected cheating.';
+  String get error_provideOneCheatedGameLink => 'Please provide at least one link to a game for review.';
 
   @override
   String by(String param) {
@@ -3603,6 +3763,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invalidAuthenticationCode => 'Invalid authentication code';
+
+  @override
+  String get clearField => 'Clear field';
+
+  @override
+  String get orSeparator => 'Or';
+
+  @override
+  String get logInByEmail => 'Log in by email';
 
   @override
   String get emailMeALink => 'Email me a link';
@@ -3806,7 +3975,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get menu => 'Menu';
 
   @override
-  String get castling => 'Castling';
+  String get castling => 'Castling rights';
 
   @override
   String get whiteCastlingKingside => 'White O-O';
@@ -3973,21 +4142,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get keyEnterOrExitVariation => 'enter/exit variation';
-
-  @override
-  String get keyRequestComputerAnalysis => 'Request computer analysis, Learn from your mistakes';
-
-  @override
-  String get keyNextLearnFromYourMistakes => 'Next (Learn from your mistakes)';
-
-  @override
-  String get keyNextBlunder => 'Next blunder';
-
-  @override
-  String get keyNextMistake => 'Next mistake';
-
-  @override
-  String get keyNextInaccuracy => 'Next inaccuracy';
 
   @override
   String get keyPreviousBranch => 'Previous branch';
@@ -4270,6 +4424,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get brightness => 'Brightness';
+
+  @override
+  String get contrast => 'Contrast';
 
   @override
   String get hue => 'Hue';
@@ -4901,10 +5058,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get clearSearch => 'Clear search';
 
   @override
+  String thereAreNoResultsForX(String param) {
+    return 'No results for \"$param\"';
+  }
+
+  @override
   String get tags => 'Tags';
 
   @override
-  String get enPassant => 'En passant';
+  String get enPassant => 'En passant rights';
 
   @override
   String opponentLeftCounter(int count) {
@@ -6456,6 +6618,9 @@ class AppLocalizationsEnUs extends AppLocalizationsEn {
   String get mobileMustBeLoggedIn => 'You must be logged in to view this page.';
 
   @override
+  String get mobileNewGame => 'New game';
+
+  @override
   String get mobileNoSearchResults => 'No results';
 
   @override
@@ -6629,6 +6794,75 @@ class AppLocalizationsEnUs extends AppLocalizationsEn {
 
   @override
   String get mobileWelcomeToLichessApp => 'Welcome to the Lichess app!';
+
+  @override
+  String get mobileViewGame => 'View Game';
+
+  @override
+  String get mobileCustomizeHomeTip => 'Tip: You can add more widgets to the Home Screen or remove those you don\'t need!';
+
+  @override
+  String get mobileCustomizeHomeTipDismiss => 'Dismiss';
+
+  @override
+  String get mobileCustomizeButton => 'Customize';
+
+  @override
+  String get mobileStopShowingThreat => 'Stop showing threat';
+
+  @override
+  String get mobileTournamentCompleted => 'Completed';
+
+  @override
+  String get mobileTournamentJumpToMyPage => 'Jump to my page';
+
+  @override
+  String get mobileDisplayModeCompact => 'Compact';
+
+  @override
+  String get mobileDisplayModeDetailed => 'Detailed';
+
+  @override
+  String get mobileOpeningExplorerNotAvailableOffline => 'Opening Explorer is not available offline.';
+
+  @override
+  String get mobileChallengeCreated => 'Challenge created: You will be notified when the game starts.\\nYou can access it from the home tab.';
+
+  @override
+  String get mobilePreviousPage => 'Previous';
+
+  @override
+  String get mobileOrImportPgnFile => 'Or import a PGN file';
+
+  @override
+  String get variantStandardTitle => 'Standard rules of chess (FIDE)';
+
+  @override
+  String get variantChess960Title => 'The starting position of the home rank pieces is randomized.';
+
+  @override
+  String get variantKingOfTheHillTitle => 'Bring your King to the center to win the game.';
+
+  @override
+  String get variantThreeCheckTitle => 'Check your opponent 3 times to win the game.';
+
+  @override
+  String get variantAntichessTitle => 'Lose all your pieces (or get stalemated) to win the game.';
+
+  @override
+  String get variantAtomicTitle => 'Nuke your opponent\'s king to win.';
+
+  @override
+  String get variantHordeTitle => 'One side has a large number of pawns, the other has a normal army.';
+
+  @override
+  String get variantRacingKingsTitle => 'Get your king to the other side of the board to win.';
+
+  @override
+  String get variantCrazyhouseTitle => 'Captured pieces can be dropped back on the board instead of moving a piece.';
+
+  @override
+  String get variantFromPositionTitle => 'Standard chess from a custom position';
 
   @override
   String get activityActivity => 'Activity';
@@ -7250,6 +7484,9 @@ class AppLocalizationsEnUs extends AppLocalizationsEn {
   String get broadcastScore => 'Score';
 
   @override
+  String get broadcastStandingsDisclaimer => 'Standings are calculated using broadcasted games and may differ from official results.';
+
+  @override
   String get broadcastAllTeams => 'All teams';
 
   @override
@@ -7294,12 +7531,82 @@ class AppLocalizationsEnUs extends AppLocalizationsEn {
   }
 
   @override
+  String get broadcastMatchPoints => 'Match Points';
+
+  @override
+  String get broadcastGamePoints => 'Game Points';
+
+  @override
+  String get broadcastMatches => 'Matches';
+
+  @override
+  String get broadcastMatchHistory => 'Match History';
+
+  @override
+  String get broadcastTeamResults => 'Team Results';
+
+  @override
+  String broadcastTermsAutomaticallyTranslated(String param) {
+    return 'The following term(s) will be automatically translated: $param.';
+  }
+
+  @override
   String broadcastRoundX(String param) {
     return 'Round $param';
   }
 
   @override
   String get broadcastDefaultRoundNameHelp => 'Keeping the default name will automatically translate it to all other languages.';
+
+  @override
+  String get broadcastOpenTournament => 'Open';
+
+  @override
+  String get broadcastWomenTournament => 'Women';
+
+  @override
+  String get broadcastMenTournament => 'Men';
+
+  @override
+  String get broadcastGirlsTournament => 'Girls';
+
+  @override
+  String get broadcastBoysTournament => 'Boys';
+
+  @override
+  String broadcastOpenUnderXAgeTournament(String param) {
+    return 'Open U$param';
+  }
+
+  @override
+  String broadcastGirlsUnderXAgeTournament(String param) {
+    return 'Girls U$param';
+  }
+
+  @override
+  String broadcastBoysUnderXAgeTournament(String param) {
+    return 'Boys U$param';
+  }
+
+  @override
+  String get broadcastQuarterfinals => 'Quarterfinals';
+
+  @override
+  String get broadcastSemifinals => 'Semifinals';
+
+  @override
+  String get broadcastFinals => 'Finals';
+
+  @override
+  String get broadcastTiebreaks => 'Tiebreaks';
+
+  @override
+  String broadcastGameX(String param) {
+    return 'Game $param';
+  }
+
+  @override
+  String get broadcastKnockouts => 'Knockouts';
 
   @override
   String broadcastNbBroadcasts(int count) {
@@ -8163,6 +8470,12 @@ class AppLocalizationsEnUs extends AppLocalizationsEn {
   String get puzzleThemeCapturingDefenderDescription => 'Removing a piece that is critical to defense of another piece, allowing the now undefended piece to be captured on a following move.';
 
   @override
+  String get puzzleThemeCollinearMove => 'Collinear move';
+
+  @override
+  String get puzzleThemeCollinearMoveDescription => 'Two opposing pieces face each other, and one slides along the line of attack without capturing the enemy piece.';
+
+  @override
   String get puzzleThemeCornerMate => 'Corner mate';
 
   @override
@@ -8244,6 +8557,12 @@ class AppLocalizationsEnUs extends AppLocalizationsEn {
   String get puzzleThemeEnPassantDescription => 'A tactic involving the en passant rule, where a pawn can capture an opponent pawn that has bypassed it using its initial two-square move.';
 
   @override
+  String get puzzleThemeEpauletteMate => 'Epaulette mate';
+
+  @override
+  String get puzzleThemeEpauletteMateDescription => 'Two adjacent escape squares for a checked king are occupied by other pieces.';
+
+  @override
   String get puzzleThemeExposedKing => 'Exposed king';
 
   @override
@@ -8296,6 +8615,12 @@ class AppLocalizationsEnUs extends AppLocalizationsEn {
 
   @override
   String get puzzleThemeMorphysMateDescription => 'Use the bishop to check the king, while your rook helps to confine it.';
+
+  @override
+  String get puzzleThemeSwallowstailMate => 'Swallow\'s tail mate';
+
+  @override
+  String get puzzleThemeSwallowstailMateDescription => 'A checkmate pattern that visually resembles the appearance of a swallow’s tail, similar to a V shape.';
 
   @override
   String get puzzleThemeTriangleMate => 'Triangle mate';
@@ -8568,6 +8893,12 @@ class AppLocalizationsEnUs extends AppLocalizationsEn {
 
   @override
   String get orLetYourOpponentScanQrCode => 'Or let your opponent scan this QR code';
+
+  @override
+  String get reusableChallengeUrl => 'Reusable challenge URL';
+
+  @override
+  String get permanentLinkForAnyoneToChallengeYou => 'A permanent link, with these exact settings, for anyone to challenge you.';
 
   @override
   String get waiting => 'Waiting';
@@ -8904,13 +9235,34 @@ class AppLocalizationsEnUs extends AppLocalizationsEn {
   String get evaluationGauge => 'Evaluation gauge';
 
   @override
+  String get checkableKing => 'Checkable king';
+
+  @override
   String get multipleLines => 'Multiple lines';
+
+  @override
+  String get multipleLinesDescription => 'Set number of evaluation lines and move arrows on the board';
+
+  @override
+  String get searchTime => 'Search time';
+
+  @override
+  String get searchTimeDescription => 'Set time to evaluate fresh positions';
+
+  @override
+  String get threads => 'Threads';
+
+  @override
+  String get threadsDescriptionMobile => 'More threads will use more battery for better analysis';
 
   @override
   String get cpus => 'CPUs';
 
   @override
   String get memory => 'Memory';
+
+  @override
+  String get memoryDescription => 'Higher values may improve performance';
 
   @override
   String get infiniteAnalysis => 'Infinite analysis';
@@ -9070,7 +9422,7 @@ class AppLocalizationsEnUs extends AppLocalizationsEn {
   String get signupUsernameHint => 'Be sure to choose a family-friendly username. You cannot change it later, and any accounts with inappropriate usernames will be closed!';
 
   @override
-  String get signupEmailHint => 'We will only use it for password reset.';
+  String get signupEmailPromise => 'We will only send you emails about your account and never share your email.';
 
   @override
   String get password => 'Password';
@@ -9498,6 +9850,12 @@ class AppLocalizationsEnUs extends AppLocalizationsEn {
 
   @override
   String get gameAsGIF => 'Game as GIF';
+
+  @override
+  String get playerNames => 'Player names';
+
+  @override
+  String get moveAnnotations => 'Move annotations';
 
   @override
   String get pasteTheFenStringHere => 'Paste the FEN text here';
@@ -9948,6 +10306,15 @@ class AppLocalizationsEnUs extends AppLocalizationsEn {
   String get invalidAuthenticationCode => 'Invalid authentication code';
 
   @override
+  String get clearField => 'Clear field';
+
+  @override
+  String get orSeparator => 'Or';
+
+  @override
+  String get logInByEmail => 'Log in by email';
+
+  @override
   String get emailMeALink => 'Email me a link';
 
   @override
@@ -10149,7 +10516,7 @@ class AppLocalizationsEnUs extends AppLocalizationsEn {
   String get menu => 'Menu';
 
   @override
-  String get castling => 'Castling';
+  String get castling => 'Castling rights';
 
   @override
   String get whiteCastlingKingside => 'White O-O';
@@ -10316,21 +10683,6 @@ class AppLocalizationsEnUs extends AppLocalizationsEn {
 
   @override
   String get keyEnterOrExitVariation => 'enter/exit variation';
-
-  @override
-  String get keyRequestComputerAnalysis => 'Request computer analysis, Learn from your mistakes';
-
-  @override
-  String get keyNextLearnFromYourMistakes => 'Next (Learn from your mistakes)';
-
-  @override
-  String get keyNextBlunder => 'Next blunder';
-
-  @override
-  String get keyNextMistake => 'Next mistake';
-
-  @override
-  String get keyNextInaccuracy => 'Next inaccuracy';
 
   @override
   String get keyPreviousBranch => 'Previous branch';
@@ -10613,6 +10965,9 @@ class AppLocalizationsEnUs extends AppLocalizationsEn {
 
   @override
   String get brightness => 'Brightness';
+
+  @override
+  String get contrast => 'Contrast';
 
   @override
   String get hue => 'Hue';
@@ -11244,10 +11599,15 @@ class AppLocalizationsEnUs extends AppLocalizationsEn {
   String get clearSearch => 'Clear search';
 
   @override
+  String thereAreNoResultsForX(String param) {
+    return 'No results for \"$param\"';
+  }
+
+  @override
   String get tags => 'Tags';
 
   @override
-  String get enPassant => 'En passant';
+  String get enPassant => 'En passant rights';
 
   @override
   String opponentLeftCounter(int count) {

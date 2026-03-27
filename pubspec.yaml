@@ -2,19 +2,19 @@ name: lichess_mobile
 description: Lichess mobile app V2
 publish_to: "none"
 
-version: 0.20.0+002000 # See README.md for details about versioning
+version: 0.22.7+002207 # See README.md for details about versioning
 
 environment:
   # this should be updated with every new flutter stable release
   sdk: ^3.10.0
-  flutter: ^3.38.0
+  flutter: ^3.41.0
 
 dependencies:
   app_links: ^7.0.0
   app_settings: ^7.0.0
   async: ^2.10.0
   auto_size_text: ^3.0.0
-  chessground: ^7.3.0
+  chessground: ^9.0.0
   clock: ^1.1.1
   collection: ^1.17.0
   connectivity_plus: ^7.0.0
@@ -22,10 +22,13 @@ dependencies:
   crypto: ^3.0.3
   cupertino_http: ^2.0.0
   cupertino_icons: ^1.0.2
-  dartchess: ^0.11.0
+  dartchess: ^0.12.0
   deep_pick: ^1.0.0
   device_info_plus: ^12.1.0
-  dynamic_system_colors: ^1.8.0
+  dynamic_system_colors:
+    git:
+      url: https://github.com/veloce/flutter_dynamic_system_colors.git
+      ref: main
   fast_immutable_collections: ^11.0.0
   file_picker: ^10.3.8
   firebase_core: ^4.0.0
@@ -34,11 +37,10 @@ dependencies:
   fl_chart: ^1.0.0
   flutter:
     sdk: flutter
-  flutter_appauth: ^11.0.0
   flutter_displaymode: ^0.7.0
   flutter_layout_grid: ^2.0.1
   flutter_linkify: ^6.0.0
-  flutter_local_notifications: ^20.0.0
+  flutter_local_notifications: ^21.0.0
   flutter_localizations:
     sdk: flutter
   flutter_markdown: ^0.7.3+1
@@ -58,18 +60,17 @@ dependencies:
   material_color_utilities: ^0.13.0
   material_symbols_icons: ^4.2811.0
   meta: ^1.8.0
-  # multistockfish: ^0.3.0
-  multistockfish:
-    git:
-      url: https://github.com/lichess-org/dart-multistockfish.git
-      ref: defer_start
-      path: pkgs/multistockfish
+  multistockfish: ^0.5.0
   package_info_plus: ^9.0.0
   path: ^1.8.2
   path_provider: ^2.1.5
   popover: ^0.4.0
   pub_semver: ^2.1.4
   quick_actions: ^1.1.0
+  receive_sharing_intent:
+    git:
+      url: https://github.com/KasemJaffer/receive_sharing_intent
+      ref: 2cea396843cd3ab1b5ec4334be4233864637874e
   result_extensions: ^0.2.0
   share_plus: ^12.0.0
   shared_preferences: ^2.1.0

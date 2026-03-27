@@ -4,7 +4,6 @@ import 'package:dartchess/dartchess.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lichess_mobile/src/constants.dart';
 import 'package:lichess_mobile/src/model/account/account_repository.dart';
 import 'package:lichess_mobile/src/model/challenge/challenge.dart';
 import 'package:lichess_mobile/src/model/challenge/challenge_preferences.dart';
@@ -25,6 +24,7 @@ import 'package:lichess_mobile/src/widgets/expanded_section.dart';
 import 'package:lichess_mobile/src/widgets/feedback.dart';
 import 'package:lichess_mobile/src/widgets/non_linear_slider.dart';
 import 'package:lichess_mobile/src/widgets/user.dart';
+import 'package:lichess_mobile/src/widgets/variant_app_bar_title.dart';
 
 class CreateChallengeBottomSheet extends ConsumerStatefulWidget {
   const CreateChallengeBottomSheet(this.user, {this.positionFen});
@@ -69,6 +69,7 @@ class _CreateChallengeBottomSheetState extends ConsumerState<CreateChallengeBott
   Widget build(BuildContext context) {
     final accountAsync = ref.watch(accountProvider);
     final preferences = ref.watch(challengePreferencesProvider);
+    final createGameService = ref.watch(createGameServiceProvider);
 
     final isValidTimeControl =
         preferences.timeControl != ChallengeTimeControlType.clock ||
@@ -238,9 +239,9 @@ class _CreateChallengeBottomSheetState extends ConsumerState<CreateChallengeBott
                 onPressed: () {
                   showChoicePicker(
                     context,
-                    choices: [Variant.standard, Variant.chess960, Variant.fromPosition],
+                    choices: playSupportedVariants.toList(),
                     selectedItem: preferences.variant,
-                    labelBuilder: (Variant variant) => Text(variant.label),
+                    labelBuilder: (variant) => VariantLabel(variant),
                     onSelectedItemChanged: (Variant variant) {
                       ref.read(challengePreferencesProvider.notifier).setVariant(variant);
                     },
@@ -253,7 +254,7 @@ class _CreateChallengeBottomSheetState extends ConsumerState<CreateChallengeBott
               expand: preferences.variant == Variant.fromPosition,
               child: SmallBoardPreview(
                 orientation: preferences.sideChoice == SideChoice.black ? Side.black : Side.white,
-                fen: fromPositionFenInput ?? kEmptyFen,
+                fen: fromPositionFenInput ?? kEmptyFEN,
                 description: TextField(
                   maxLines: 5,
                   decoration: InputDecoration(
@@ -328,7 +329,6 @@ class _CreateChallengeBottomSheetState extends ConsumerState<CreateChallengeBott
                       ChallengeTimeControlType.unlimited =>
                         snapshot.connectionState != ConnectionState.waiting
                             ? () async {
-                                final createGameService = ref.read(createGameServiceProvider);
                                 setState(() {
                                   _pendingCorrespondenceChallenge = createGameService
                                       .newCorrespondenceChallenge(
@@ -394,9 +394,11 @@ class _CreateChallengeBottomSheetState extends ConsumerState<CreateChallengeBott
                                     );
                                   }
                                 } finally {
-                                  setState(() {
-                                    _pendingCorrespondenceChallenge = null;
-                                  });
+                                  if (mounted) {
+                                    setState(() {
+                                      _pendingCorrespondenceChallenge = null;
+                                    });
+                                  }
                                 }
                               }
                             : null,
