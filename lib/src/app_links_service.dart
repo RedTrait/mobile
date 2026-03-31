@@ -51,8 +51,12 @@ class AppLinksService {
         if (uri.scheme == 'file' || uri.scheme == 'content') {
           return;
         }
-        if (uri.scheme == kOAuthRedirectUriScheme && uri.host == kOAuthRedirectUriHost) {
+        if (uri.scheme == kLichessUriScheme && uri.host == kOAuthRedirectUriHost) {
           ref.read(oauthCallbackProvider).add(uri);
+          return;
+        }
+        if (uri.scheme == kLichessUriScheme && uri.host == 'open-web') {
+          _handleOpenWebLink(uri);
           return;
         }
         final context = ref.read(currentNavigatorKeyProvider).currentContext;
@@ -115,6 +119,18 @@ class AppLinksService {
     return null;
   }
 
+  /// Handles an `org.lichess.mobile://open-web?url=...` link (e.g. from the platform widget)
+  /// by opening the encoded URL in the platform in-app browser.
+  void _handleOpenWebLink(Uri uri) {
+    final target = uri.queryParameters['url'];
+    if (target != null) {
+      final targetUri = Uri.tryParse(target);
+      if (targetUri != null) {
+        launchUrl(targetUri, mode: LaunchMode.inAppBrowserView);
+      }
+    }
+  }
+
   Future<bool> _tryResolveChallengeLink(BuildContext context, Uri appLinkUri) async {
     try {
       final challengeId = ChallengeId(appLinkUri.pathSegments[0]);
@@ -122,7 +138,7 @@ class AppLinksService {
       final challenge = await ref.read(challengeRepositoryProvider).show(challengeId);
       if (!context.mounted) return false;
 
-      ref.read(challengeServiceProvider).showConfirmDialog(context, challenge);
+      ref.read(challengeServiceProvider).showConfirmDialog(context, challenge, fromLink: true);
 
       return true;
     } catch (e, st) {
